@@ -47,6 +47,15 @@
                                         <td>@user.Email</td>
                                         <td>                                            
                                             <a href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true" style="margin-left:10px;border-radius: 50%;border:1px solid #5A738E;padding:5px 5px;"></span></a>
+                                            
+                                            @if (user.TrangThai == true)
+                                            {
+                                                <a href="#" class="btn-active" data-aID=@user.ID >Disable</a>
+                                            }
+                                            else if (user.TrangThai == false)
+                                            {
+                                                <a href="#" class="btn-active" data-aID=@user.ID >Active</a>
+                                            }
                                         </td>
                                     </tr>
                                 }

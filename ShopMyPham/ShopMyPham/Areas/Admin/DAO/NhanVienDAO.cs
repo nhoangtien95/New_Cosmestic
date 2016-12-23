@@ -38,13 +38,14 @@ namespace ShopMyPham.Areas.Admin.DAO
         public bool AddNhanVien( NhanVienModel result)
         {
             QuanTri user = new QuanTri();
-            user.ID = result.ID;
             user.Username = result.Username;
             user.Ten = result.Ten;
             user.Sdt = result.Sdt;
             user.DiaChi = result.DiaChi;
             user.Email = result.Email;
             user.TrangThai = true;
+            user.Level = 2;
+
             db.QuanTris.AddObject(user);
             db.SaveChanges();
             return true;

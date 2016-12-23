@@ -20,6 +20,34 @@
     @Styles.Render("~/bundles/datatable/css")
     <!-- Custom Theme Style -->
     @Styles.Render("~/bundles/build/css")
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script>
+        $(function () {
+            $(document).ready(function () {
+                $('.btn-active').off('click').on('click', function () {
+                    var text = $(this);
+                    var id = text.data('aid');
+                    console.log(id);
+                    $.ajax({
+                        url: '@Url.Action("statusChange", "KhachHang")',
+                        data: { id: id },
+                        dataType: 'json',
+                        type: 'POST',
+                        success: function (response) {
+                            if (response.status == true) {
+                                text.text("Disable");
+                            }
+                            else {
+                                text.text("Active");
+                            }
+                        }
+                    });
+                });
+            });          
+
+        });
+       
+    </script>
 </head>
 
 <body class="nav-md">

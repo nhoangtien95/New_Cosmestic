@@ -16,22 +16,20 @@ namespace ShopMyPham.Areas.Admin.DAO
         }
         public List<KhachHangModel> getList()
         {
-            var list = db.QuanTris.ToList();
+            var list = db.QuanTris.Where(x => x.Level == 1).ToList();
             List<KhachHangModel> l = new List<KhachHangModel>();
             KhachHangModel user = null;
             foreach (QuanTri result in list)
             {
-                if (result.TrangThai == false)
-                {
-                    user = new KhachHangModel();
-                    user.ID = result.ID;
-                    user.Username = result.Username;
-                    user.Ten = result.Ten;
-                    user.Sdt = result.Sdt;
-                    user.DiaChi = result.DiaChi;
-                    user.Email = result.Email;
-                    l.Add(user);
-                }
+                user = new KhachHangModel();
+                user.ID = result.ID;
+                user.Username = result.Username;
+                user.Ten = result.Ten;
+                user.Sdt = result.Sdt;
+                user.DiaChi = result.DiaChi;
+                user.Email = result.Email;
+                user.TrangThai = result.TrangThai;
+                l.Add(user);
             }
             return l;
         }

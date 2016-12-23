@@ -14,5 +14,6 @@ namespace ShopMyPham.Areas.Admin.Models
         public string DiaChi { get; set; }
         public string Sdt { get; set; }
         public string Email { get; set; }        
+        public Boolean? TrangThai { get; set; }
     }
 }
