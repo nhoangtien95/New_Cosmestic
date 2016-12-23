@@ -1,4 +1,5 @@
 ﻿using ShopMyPham.Areas.Admin.DAO;
+using ShopMyPham.Areas.Admin.Models;
 using ShopMyPham.Models;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,11 @@ namespace ShopMyPham.Areas.Admin.Controllers
         // GET: Admin/KhachHang
         public ActionResult ListKhachHang()
         {
-            KhachHangDAO dao = new KhachHangDAO();
-            var list = dao.getList();
+            //KhachHangDAO dao = new KhachHangDAO();
+            //var list = dao.getList();
 
-            return View(list);
+            ViewBag.user = db.QuanTris.Where(x => x.Level == 1).ToList();
+            return View();
         }
 
         [HttpPost]
@@ -38,6 +40,50 @@ namespace ShopMyPham.Areas.Admin.Controllers
             {
                 status = user.TrangThai
             });
+        }
+
+        [HttpPost]
+        public ActionResult customerEdit(CustomerEditModel model)
+        {
+            var user = db.QuanTris.Single(x => x.ID == model.id);
+            user.Password = model.pass;
+            user.DiaChi = model.diachi;
+            user.Sdt = model.Sdt;
+            user.Email = model.email;
+
+            db.ObjectStateManager.ChangeObjectState(user, System.Data.Entity.EntityState.Modified);
+            db.SaveChanges();
+
+            return RedirectToAction("ListKhachHang");
+        }
+
+        [HttpPost]
+        public ActionResult customerDelete(int id)
+        {
+            var user = db.QuanTris.Single(x => x.ID == id);
+            db.QuanTris.DeleteObject(user);
+            db.SaveChanges();
+
+            return RedirectToAction("ListKhachHang");
+        }
+
+        public ActionResult addCustomer(NhanVienModel customer)
+        {
+            var user = new QuanTri()
+            {
+                Username = customer.Username,
+                Password = customer.Password,
+                Ten = customer.Ten,
+                DiaChi = customer.DiaChi,
+                Sdt = customer.Sdt,
+                Email = customer.Email,
+                TrangThai = true,
+                Level = 1
+            };
+            db.QuanTris.AddObject(user);
+            db.SaveChanges();
+
+            return RedirectToAction("ListKhachHang");
         }
     }
 }

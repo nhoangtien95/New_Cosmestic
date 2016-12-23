@@ -6,12 +6,17 @@ using System.Web;
 
 namespace ShopMyPham.Areas.Admin.Models
 {
-    public class AdminEditModel
+    public class CustomerEditModel
     {
         public int id { get; set; }
+
+        [Required(ErrorMessage = "Vui lòng không bỏ trống !")]
+        [StringLength(20, ErrorMessage = "Vui lòng nhập dưới 20 kí tự ")]
+        public string pass { get; set; }
+
         [Required(ErrorMessage = "Vui lòng không bỏ trống !")]
         [StringLength(50, ErrorMessage = "Vui lòng nhập dưới 50 kí tự ")]
-        public string DiaChi { get; set; }
+        public string diachi { get; set; }
 
         [Required(ErrorMessage = "Vui lòng không bỏ trống !")]
         [StringLength(12, ErrorMessage = "Số điện thoại không hợp lệ !")]
@@ -20,6 +25,6 @@ namespace ShopMyPham.Areas.Admin.Models
 
         [Required(ErrorMessage = "Vui lòng không bỏ trống !")]
         [StringLength(20, ErrorMessage = "Vui lòng nhập dưới 20 kí tự ")]
-        public string Email { get; set; }
+        public string email { get; set; }
     }
 }

@@ -39,6 +39,7 @@ namespace ShopMyPham.Areas.Admin.DAO
         {
             QuanTri user = new QuanTri();
             user.Username = result.Username;
+            user.Password = result.Password;
             user.Ten = result.Ten;
             user.Sdt = result.Sdt;
             user.DiaChi = result.DiaChi;

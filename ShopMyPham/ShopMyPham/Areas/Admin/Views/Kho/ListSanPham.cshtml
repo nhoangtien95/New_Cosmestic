@@ -22,11 +22,84 @@
                         <h2>Sản Phẩm</h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li>
-                                <button type="button" class="btn btn-success" style="ruby-align:right"><i class="fa fa-plus"></i> Thêm</button>
+                                <button type="button" class="btn btn-success" style="ruby-align:right" data-toggle="modal" data-target="#addProduct"><i class="fa fa-plus"></i> Thêm</button>
                             </li>
                         </ul>
                         <div class="clearfix"></div>
                     </div>
+
+                    @*Popup modal Add product*@
+                    <div class="modal fade" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Thêm Sản Phẩm</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="x_panel" style="border:none">
+                                        <div class="x_content">
+                                            <br>
+                                            @using (Html.BeginForm("addCustomer", "KhachHang", FormMethod.Post))
+                                            {
+                                                <div class="form-horizontal form-label-left input_mask">
+                                                    <div class="form-group">
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
+                                                            <input type="text" class="form-control has-feedback-left" name="MaSanPham" required="required" placeholder="Tài Khoản">
+                                                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
+                                                            <input type="password" class="form-control has-feedback-left" name="TenSanPham" required="required" placeholder="Mật Khẩu">
+                                                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
+                                                            <input type="text" class="form-control has-feedback-left" name="GiaBan" required="required" placeholder="Họ Tên">
+                                                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
+                                                            <input type="text" class="form-control has-feedback-left" name="Mota" required="required" placeholder="Địa Chỉ">
+                                                            <span class="fa fa-building form-control-feedback left" aria-hidden="true"></span>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
+                                                            <input type="text" class="form-control has-feedback-left" name="ThuongHieu" required="required" placeholder="Số Điện Thoại">
+                                                            <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
+                                                            <input type="text" class="form-control has-feedback-left" name="Loai" required="required" placeholder="Email">
+                                                            <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
+                                                            <input type="text" class="form-control has-feedback-left" name="IDKhuyenMai" required="required" placeholder="Email">
+                                                            
+                                                            <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
+                                                            <input type="text" class="form-control has-feedback-left" name="SEO" required="required" placeholder="Email">
+                                                            <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ln_solid"></div>
+                                                    <div class="form-group">
+                                                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                                            <button type="reset" class="btn btn-primary">Nhập Lại</button>
+                                                            <button type="submit" class="btn btn-success">Xác Nhận</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
                     <div class="x_content">
 
                         <div class="row">

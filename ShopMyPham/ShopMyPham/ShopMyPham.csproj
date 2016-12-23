@@ -185,6 +185,7 @@
     <Compile Include="Areas\Admin\DAO\ThongKeDAO.cs" />
     <Compile Include="Areas\Admin\DAO\ThuongHieuDAO.cs" />
     <Compile Include="Areas\Admin\Models\AdminEditModel.cs" />
+    <Compile Include="Areas\Admin\Models\CustomerEditModel.cs" />
     <Compile Include="Areas\Admin\Models\DonDatModel.cs" />
     <Compile Include="Areas\Admin\Models\KhachHangModel.cs" />
     <Compile Include="Areas\Admin\Models\KhuyenMaiModel.cs" />

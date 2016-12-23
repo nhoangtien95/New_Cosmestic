@@ -24,6 +24,7 @@ namespace ShopMyPham.Areas.Admin.DAO
                 user = new KhachHangModel();
                 user.ID = result.ID;
                 user.Username = result.Username;
+                user.Password = result.Password;
                 user.Ten = result.Ten;
                 user.Sdt = result.Sdt;
                 user.DiaChi = result.DiaChi;
