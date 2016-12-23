@@ -1,0 +1,156 @@
+﻿
+@{
+    Layout = null;
+    var cart = ViewBag.Cart as ShopMyPham.ViewModel.CartModel;
+    var user = Session["user"] as ShopMyPham.Models.QuanTri;
+}
+<script>
+   $(function () {
+
+            $('.updateCart').click(function () {
+                var id = $(this).data('item');
+                var quantity = $('.itemQuantity').val();
+                $.ajax({
+                    url: "/gio-hang/cap-nhat-san-pham/" + id + "/" + quantity,
+                    type: 'POST',
+                    success: function () {
+                        $('.mini-cart-content').load('@Url.Content("~/load-cart")');
+                        $('#CartDetails').load('@Url.Content("~/gio-hang")');
+                    }
+                });
+            });
+
+   });
+
+    $(function () {
+
+        $('.removeCheckout').click(function () {
+
+            var id = $(this).data('item_remove');
+            $.ajax({
+                url: "/gio-hang/xoa-san-pham/" + id,
+                data: { 'id': id },
+                type: 'POST',
+                success: function () {
+                    $('.mini-cart-content').load('@Url.Content("~/load-cart")');
+                    $('#CartDetails').load('@Url.Content("~/gio-hang")');
+                }
+            });
+        });
+
+    });
+</script>
+@if (cart.Items.Count() == 0)
+{
+    <div style="margin-top:240px; margin-left: 45px; height:500px; max-height: 500px;">
+        <h1 style="text-align:center">Giỏ Hàng Của Bạn Hiện Tại Không Có Sản Phẩm Nào</h1>
+        <a href="@Url.Action("Index", "Home")" style="text-align:center; margin-left: 520px;">ĐI MUA HÀNG THÔI</a>
+    </div>
+}
+else
+{
+
+    <div class="cart-title-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="car-header-title">
+                        <h2>Giỏ Hàng Của:  @user.Ten</h2>
+                        <input type="hidden" id="cart-product-id" value="@cart.Items.FirstOrDefault().SanPhamID" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br /><br /><br />
+
+
+    <div class="cart-main-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <form>
+                        <div class="table-content table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="product-thumbnail"></th>
+                                        <th class="product-name">Sản Phẩm</th>
+                                        <th class="product-price">Giá</th>
+                                        <th class="product-quantity">Số Lượng</th>
+                                        <th class="product-subtotal">Thành Tiền</th>
+                                        <th class="product-remove">Xóa</th>
+                                        <th class="product-price">Chỉnh Sửa</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in cart.Items)
+                                    {
+                                        <tr>
+                                            <td class="product-thumbnail"><a href="#"><img src="Photos/SP/@item.SanPhamHinh.TenHinh" alt="" /></a></td>
+                                            <td class="product-name"><a href="#">@item.SanPham.TenSanPham</a></td>
+                                            <td class="product-price"><input type="hidden" id="proID" value="@item.SanPhamID" /> @string.Format("{0:#,##0 VND}", @item.SanPham.GiaBan)</td>
+                                            <td class="product-quantity"><input type="number" class="itemQuantity" value="@item.SoLuong" /></td>
+                                            <td class="product-subtotal totalProduct" id="changeQuantity">@string.Format("{0:#,##0 VND}", @item.SanPham.GiaBan * item.SoLuong) </td>
+                                            <td class="product-remove"><a><i class="fa fa-times removeCheckout" data-item_remove="@item.SanPhamID"></i></a></td>
+                                            <td><input type="button" class="updateCart btn btn-default" style="width:100px" data-item="@item.SanPhamID" value="CẬP NHẬT" /></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <input type="button" id="updateCart" value="CẬP NHẬT" />
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 col-sm-7">
+                                <div class="coupon">
+                                    <h3>Sản Phẩm Sẽ Được Giao Tới :</h3>
+                                    <br />
+                                    <h3>Địa Chỉ: @user.DiaChi</h3>
+                                    <br />
+                                    <h3>Số Điện Thoại: @user.Sdt</h3>
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-5">
+                                <div class="cart_totals">
+                                    <h2>Tổng Cộng</h2>
+                                    <table>
+                                        <tbody>
+                                            <tr class="shipping">
+                                                <td>
+                                                    <ul id="shipping_method">
+                                                        <li>
+                                                            <label>
+                                                                Free Shipping
+                                                            </label>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr class="order-total">
+                                                <th>Số tiền cần trả</th>
+                                                <td>
+                                                    <strong><span class="amount">@cart.Total().ToString("#,##0VND")</span></strong>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div style="padding-left:150px; text-align:left;">
+                                        <br />
+                                        <input type="radio" name="checkout" value="0" checked /> Thanh toán khi nhận hàng
+                                        <br />
+                                        <input type="radio" name="checkout" value="1" /> Thanh toán trực tuyến
+                                    </div>
+                                </div>
+                                <div class="wc-proceed-to-checkout" style="padding-left:200px;">
+                                    @Html.ActionLink("Xác Nhận", "CheckOutStep1", "Cart")
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,74 @@
+﻿@model List<ShopMyPham.Models.ThuongHieu>
+@*Brand area*@
+<div style="padding-left:75px;">
+    <div class="brand-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-heading">
+                        <h3>Các Thương Hiệu</h3>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="brand-curosel">
+                        @foreach (var item in Model)
+                        {
+                     <!-- brand-img start -->
+                            <div class="brand-img">
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "BrandCategory", "Category", new { id = item.ID }, null).ToHtmlString().Replace("[replacetext]",
+                                       "<img style=\"display:block; margin:0 auto; max-height: 135px; max-width:135px; height:135px; width:135px;\" src =\"/Photos/ThuongHieu/" + item.HinhTH + "\" />"))
+                            </div>
+                     <!-- brand-img end -->
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*corporate about area*@
+<div class="corporate-about-area">
+    <div class="container">
+        <div class="row">
+            <!-- single-corporate start -->
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <div class="single-corporate">
+                    <div class="corporate-icon">
+                        <i class="fa fa-truck"></i>
+                    </div>
+                    <div class="corporate-text">
+                        <h4>FREE SHIP & Hoàn Trả</h4>
+                        <p>Free ship cho tất cả đơn hàng hơn 500k.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- single-corporate end -->
+            <!-- single-corporate start -->
+            <div class="col-lg-4 col-md-4 col-sm-4" style="padding-left:80px">
+                <div class="single-corporate">
+                    <div class="corporate-icon">
+                        <i class="fa fa-usd"></i>
+                    </div>
+                    <div class="corporate-text">
+                        <h4>Hoàn Tiền</h4>
+                        <p>Đảm bảo hoàn tiền 100%.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- single-corporate end -->
+            <!-- single-corporate start -->
+            <div class="col-lg-4 col-md-4 col-sm-4" style="padding-left:100px">
+                <div class="single-corporate">
+                    <div class="corporate-icon">
+                        <i class="fa fa-life-bouy"></i>
+                    </div>
+                    <div class="corporate-text">
+                        <h4>Hỗ Trợ Trực Tuyến 24/7</h4>
+                        <p>Xin hãy liên hệ chúng tôi</p>
+                    </div>
+                </div>
+            </div>
+            <!-- single-corporate end -->
+        </div>
+    </div>
+</div>

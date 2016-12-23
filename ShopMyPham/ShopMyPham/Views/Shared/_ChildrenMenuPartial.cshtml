@@ -1,0 +1,6 @@
+﻿@model List<ShopMyPham.Models.Loai>
+
+@foreach (var item in Model)
+{
+    @Html.ActionLink(item.Ten, "MenuCategory", "Category", new { id = item.ID }, null)
+}

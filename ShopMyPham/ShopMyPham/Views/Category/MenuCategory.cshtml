@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "MenuCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var productCategories = ViewBag.productCategories as List<ShopMyPham.Models.SanPham>;
+}
+
+
+<div class="features-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="section-heading">
+                    <h3>Các Sản Phẩm</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="features-curosel">
+                @foreach (var item in productCategories)
+                {
+                    if (@item.SanPhamHinhs.Count() > 1)
+                    {
+                        <div class="col-md-3">
+                            <div class="single-features">
+                                <div class="product-img">
+                                    @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "Category", new { id = @item.SanPhamID, name = @item.SEO }, null).ToHtmlString().Replace("[replacetext]",
+                                       "<img style=\"display: block; max - width: 300px; max - height: 300px; width: 300px; height: 300px;\" class=\"first-img\"  src =\"/Photos/SP/" + @item.SanPhamHinhs.First().TenHinh + "\" />  <img style =\"display: block; max - width: 300px; max - height: 300px; width: 300px; height: 300px;\" class=\"second-img\"  src =\"/Photos/SP/" + @item.SanPhamHinhs.Skip(1).First().TenHinh + "\" />"))
+                                    @*<img style="display: block; max - width: 300px; max - height: 300px; width: 300px; height: 300px;" class="first-img" src="~/Photos/SP/@item.SanPhamHinhs.First().TenHinh" alt="" />
+                                        <img style="display: block; max - width: 300px; max - height: 300px; width: 300px; height: 300px;" class="second-img" src="~/Photos/SP/@item.SanPhamHinhs.Skip(1).First().TenHinh" alt="" />*@
+
+                                    <a class="modal-view" href="#" data-toggle="modal" data-target="#productModal">Xem Ngay</a>
+                                </div>
+                                <div class="product-content">
+                                    <h5><a href="#">@item.TenSanPham</a></h5>
+                                    <span class="pro-price">@item.GiaBan</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-3">
+                            <div class="single-features">
+                                <span class="sale-text">Sale</span>
+                                <div class="product-img">
+                                    @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "Category", new { id = @item.SanPhamID, name = @item.SEO }, null).ToHtmlString().Replace("[replacetext]",
+        "<img style=\"display: block; max - width: 300px; max - height: 300px; width: 300px; height: 300px;\" class=\"first-img\"  src =\"/Photos/SP/" + @item.SanPhamHinhs.First().TenHinh + "\" /> "))
+                                    <a class="modal-view" href="#" data-toggle="modal" data-target="#productModal">Xem Ngay</a>
+                                </div>
+                                <div class="product-content">
+                                    <h5><a href="#">@item.TenSanPham</a></h5>
+                                    <span class="old-price">@item.GiaBan</span>
+                                    <span class="pro-price">£70.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

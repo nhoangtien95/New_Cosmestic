@@ -1,0 +1,324 @@
+﻿
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <!-- Basic page needs
+    ============================================ -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Home page</title>
+    <meta name="description" content="">
+
+    <!-- Mobile specific metas
+    ============================================ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font
+    ============================================ -->
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+    <!-- Favicon
+    ============================================ -->
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+
+    <!-- CSS  -->
+    <!-- Bootstrap CSS
+    ============================================ -->
+    <link rel="stylesheet" href="/Content/css/bootstrap.min.css">
+
+    <!-- owl.carousel CSS
+    ============================================ -->
+    <link rel="stylesheet" href="/Content/css/owl.carousel.css">
+
+    <!-- owl.theme CSS
+    ============================================ -->
+    <link rel="stylesheet" href="/Content/css/owl.theme.css">
+
+    <!-- owl.transitions CSS
+    ============================================ -->
+    <link rel="stylesheet" href="/Content/css/owl.transitions.css">
+
+    <!-- font-awesome CSS
+    ============================================ -->
+    <link rel="stylesheet" href="/Content/css/font-awesome.min.css">
+
+    <!-- animate CSS
+    ============================================ -->
+    <link rel="stylesheet" href="/Content/css/animate.css">
+
+    <!-- slicknav CSS
+    ============================================ -->
+    <link rel="stylesheet" href="/Content/css/slicknav.css">
+
+    <!-- rs-plugin CSS
+    ============================================ -->
+    <link href="/Content/lib/rs-plugin/css/settings.css" rel="stylesheet" />
+
+    <!-- normalize CSS
+    ============================================ -->
+    <link rel="stylesheet" href="/Content/css/normalize.css">
+
+    <!-- main CSS
+    ============================================ -->
+    <link rel="stylesheet" href="/Content/css/main.css">
+
+    <!-- style CSS
+    ============================================ -->
+    <link rel="stylesheet" href="/Content/style.css">
+
+    <!-- responsive CSS
+    ============================================ -->
+    <link rel="stylesheet" href="/Content/css/responsive.css">
+
+    <!-- modernizr js
+    ============================================ -->
+    @*<script src="/Content/js/vendor/modernizr-2.8.3.min.js"></script>
+
+        <link rel="stylesheet" href="~/Content/js.2/rs-plugin/css/settings.css" type="text/css" />
+        <link rel="stylesheet" href="~/Content/js.2/jquery-ui-1.10.3/css/smoothness/jquery-ui-1.10.3.custom.min.css" type="text/css" />
+        <link rel="stylesheet" href="~/Content/js.2/prettyphoto/css/prettyPhoto.css" type="text/css" />
+        <script src="~/Content/js.2/jquery.min.js"></script>
+        <script src="~/Content/js.2/modernizr.custom.56918.js"></script>*@
+
+    <script src="~/Content/js/AutoComplete/jquery.js"></script>
+    <link href="~/Content/js/AutoComplete/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/js/AutoComplete/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/js/AutoComplete/jquery-ui.structure.css" rel="stylesheet" />
+    <link href="~/Content/js/AutoComplete/jquery-ui.structure.min.css" rel="stylesheet" />
+    <link href="~/Content/js/AutoComplete/jquery-ui.theme.css" rel="stylesheet" />
+    <link href="~/Content/js/AutoComplete/jquery-ui.theme.min.css" rel="stylesheet" />
+    <script src="~/Content/js/AutoComplete/jquery-ui.js"></script>
+    <script src="~/Content/js/AutoComplete/jquery-ui.min.js"></script>
+
+    <style>
+        .searchImg {
+            float: left;
+            max-height: 120px;
+            max-width: 75px;
+            height: 120px;
+            width: 75px;
+        }
+
+        .ui-menu-item {
+            overflow: hidden;
+            width: 402px;
+        }
+
+        .searchStr {
+            position: relative;
+            float: left;
+        }
+
+        .test {
+            margin-top: 25px;
+            float: left;
+            position: relative;
+            color: hotpink;
+            width: 300px;
+            height: 100px;
+        }
+
+        .fix-text h5 a {
+            color: #6f6f6f;
+        }
+        .fix-text h5 a:hover {
+            color: #b3d4fc;
+        }
+
+        .product-custom {
+            margin-top: 20px;
+            transition: all 0.3s ease 0s;
+            text-decoration: none;
+            background-color: transparent;
+            text-align: left;
+            height: 80px;
+            max-height: 80px;
+        }
+
+            .product-custom h5 a:hover {
+                color: #b3d4fc;
+            }
+
+            .product-custom h5 a {
+                color: #6f6f6f;
+                height: 50px;
+                max-height: 45px;
+            }
+
+            .product-custom span {
+                font-weight: 700;
+                color: #e54d26;
+                font-size: 14px;
+                font-style: normal;
+                margin-top: -20px;
+            }
+    </style>
+
+    <script>
+
+        $(function () {
+            $('#productSearch').autocomplete({
+                source: '@Url.Action("Autocomplete", "Home")',
+                //focus: function (event, ui) {
+                //    $("#productSearch").val(ui.item.TenSanPham);
+                //    return false;
+                //},
+                select: function (event, ui) {
+                    $("#productSearch").val(ui.item.TenSanPham);
+                    return false;
+                }
+            })
+            .data("ui-autocomplete")._renderItem = function (ul, item) {
+                return $("<li>")
+                  .data("ui-autocomplete-item", item)
+                  .append("<div class=\"searchStr\">" + "<img class=\"searchImg\" src='/Photos/SP/" + item.TenHinh + "' />" + "<div class=\"test\"><a>" + item.TenSanPham + "</a></div> </div>")
+                  .appendTo(ul);
+            };
+        });
+
+        //Giới hạn kết quả trả về là 5
+        $.ui.autocomplete.prototype._renderMenu = function (ul, items) {
+            var self = this;
+            $.each(items, function (index, item) {
+                if (index <= 5) // Số lượng muôn
+                { self._renderItem(ul, item); }
+            });
+        }
+
+        $(function () {
+
+            $('.buyProduct').click(function () {
+
+                var quantity = $('#quantity').val();
+                var id = $('#product-id').val();
+                $.ajax({
+                    //url: @Url.Action("AddToCart", "Cart"),
+                    // data: { 'id': id, 'quantity': quantity },
+                    url: "/gio-hang/them-san-pham/" + id + "/" + quantity,
+                    type: 'POST',
+                    success: function () {
+                        $('.mini-cart-content').load('@Url.Content("~/load-cart")');
+                        $('#show_message').fadeIn(500).delay(800).fadeOut(500);
+                    }
+                });
+            });
+
+        });
+
+        $(function () {
+
+            $('.removeCart').click(function () {
+
+                var id = $('#removeProduct-id').val();
+                $.ajax({
+                    url: "/gio-hang/xoa-san-pham/" + id,
+                    data: { 'id': id },
+                    type: 'POST',
+                    success: function () {
+                        $('.mini-cart-content').load('@Url.Content("~/load-cart")');
+                        $('#CartDetails').load('@Url.Content("~/gio-hang")');
+                    }
+                });
+            });
+
+        });
+
+        $(function () {
+
+            $('.removeCheckout').click(function () {
+
+                var id = $(this).data('item_remove');
+                $.ajax({
+                    url: "/gio-hang/xoa-san-pham/" + id,
+                    data: { 'id': id },
+                    type: 'POST',
+                    success: function () {
+                        $('.mini-cart-content').load('@Url.Content("~/load-cart")');
+                        $('#CartDetails').load('@Url.Content("~/gio-hang")');
+                    }
+                });
+            });
+
+        });
+
+        $(function () {
+
+            $('.updateCart').click(function () {
+                var id = $(this).data('item');
+                var quantity = $('.itemQuantity').val();
+                $.ajax({
+                    url: "/gio-hang/cap-nhat-san-pham/" + id + "/" + quantity,
+                    type: 'POST',
+                    success: function () {
+                        $('.mini-cart-content').load('@Url.Content("~/load-cart")');
+                        $('#CartDetails').load('@Url.Content("~/gio-hang")');
+                    }
+                });
+            });
+
+        });
+
+    </script>
+
+</head>
+<body>
+
+    <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <!-- Add your site or application content here -->
+    <!-- header start -->
+    <header>
+        @*Header Top area*@
+        @Html.Action("_HeaderTopPartial", "Home")
+
+        @*Main Menu area*@
+        @Html.Action("_MainMenuPartial", "Home")
+
+
+    </header>
+    @RenderBody()
+    <br /><br /><br />
+    @*Brand area*@
+
+    @Html.Action("_BrandPartial", "Home")
+    @*Footer area*@
+    @Html.Partial("_FooterPartial")
+
+    <!-- JS -->
+    <!-- jquery js -->
+    @*<script src="/Content/js/vendor/jquery-1.11.2.min.js"></script>*@
+
+    <!-- bootstrap js -->
+    <script src="/Content/js/bootstrap.min.js"></script>
+
+    <!-- owl.carousel.min js -->
+    <script src="/Content/js/owl.carousel.min.js"></script>
+
+    <!-- slicknav js -->
+    <script src="/Content/js/jquery.slicknav.js"></script>
+
+    <!-- countdown js -->
+    <script src="/Content/js/jquery.countdown.min.js"></script>
+
+    <!-- price-slider js -->
+    <script src="/Content/js/price-slider.js"></script>
+
+    <!-- jquery.scrollUp js -->
+    <script src="/Content/js/jquery.scrollUp.min.js"></script>
+
+    <!-- Lib js -->
+    <script src="/Content/lib/rs-plugin/js/jquery.themepunch.plugins.min.js"></script>
+    <script src="/Content/lib/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+    <script src="/Content/lib/rs-plugin/rs.home.js"></script>
+
+    <!-- plugins js -->
+    <script src="/Content/js/plugins.js"></script>
+
+    <!-- main js -->
+    <script src="/Content/js/main.js"></script>
+
+</body>
+
+</html>

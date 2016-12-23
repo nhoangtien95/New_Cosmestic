@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "_CartLoad";
+    var cart = ViewBag.Cart as ShopMyPham.ViewModel.CartModel;
+}
+<script>
+    $(function () {
+
+        $('.removeCart').click(function () {
+
+            var id = $('#removeProduct-id').val();
+            $.ajax({
+                url: "/gio-hang/xoa-san-pham/" + id,
+                data: { 'id': id },
+                type: 'POST',
+                success: function () {
+                    $('.mini-cart-content').load('@Url.Content("~/load-cart")');
+                }
+            });
+        });
+
+    });
+</script>
+
+@if (cart == null || cart.Items.Count() == 0)
+{
+    <div class="cart-img-details">
+        <div class="cart-img-contaent">
+            <a><h4>Bạn chưa có sản phẩm nào</h4></a>
+        </div>
+    </div>
+        <div class="clear"></div>
+}
+else
+{
+    foreach (var item in cart.Items)
+    {
+        <div class="cart-img-details">
+            <div class="cart-img-photo">
+                <a href="#"><img src="~/Photos/SP/@item.SanPhamHinh.TenHinh" alt="" /></a>
+                <span class="quantity">@item.SoLuong</span>
+            </div>
+            <div class="cart-img-contaent">
+                <input type="hidden" id="removeProduct-id" value="@item.SanPham.SanPhamID" />
+                <a href="#"><h4>@item.SanPham.TenSanPham</h4></a>
+                <span>@string.Format("{0:#,##0 VND}", @item.SanPham.GiaBan)</span>
+            </div>
+            <div class="pro-del removeCart" style="margin-right:-15px;"><a ><i class="fa fa-times-circle"></i></a></div>
+        </div>
+    }
+    <p class="total">Tổng Cộng: <span class="amount">@cart.Total().ToString("#,##0VND")</span></p>
+        <div class="clear"></div>
+        <p class="cart-button-top">@Html.ActionLink("Mua Hàng", "Index", "Cart")</p>
+}

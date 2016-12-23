@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "allBrand";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var thuonghieu = ViewBag.ThuongHieu as List<ShopMyPham.Models.ThuongHieu>;
+}
+<style>
+    .shop-product:hover{
+        background-color:#83cbdc ;
+    }
+</style>
+@foreach (var th in thuonghieu)
+{
+    <div class="shop-product" style="width:200px; position:relative; float:left; margin:10px 10px 15px 10px; ">
+        <div class="shop-pro-img">
+            @Html.Raw(@Html.ActionLink("[replacetext]", "BrandCategory", "Category", new { id = th.ID }, null).ToHtmlString().Replace("[replacetext]",
+                                       "<img style=\"display:block; margin:0 auto; max-height:75px; max-width:75px; height:75px; width:75px\" src =\"/Photos/ThuongHieu/" + @th.HinhTH + "\" />"))
+        </div>
+        <div class="shop-pro-content" style="margin-top:23px;">
+            <h3 class="shop-pro-name"><a href="@Url.Action("BrandCategory","Category",new { id = th.ID })">@th.TenTH</a></h3>           
+        </div>
+    </div>   
+}
+<br /><br /><br />

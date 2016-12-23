@@ -1,0 +1,356 @@
+﻿@{
+    var user = Session["user"] as ShopMyPham.Models.QuanTri;
+    var dao = new ShopMyPham.Areas.Admin.DAO.DonHangDAO();
+    var list = dao.GetListDonDat();
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Beautiful Shop! | @ViewBag.Title</title>
+    <!-- Bootstrap -->
+    @Styles.Render("~/bundles/bootstrap/css")
+    <!-- Font Awesome -->
+    @Styles.Render("~/bundles/font-awesome/css")
+
+    @Styles.Render("~/bundles/datatable/css")
+    <!-- Custom Theme Style -->
+    @Styles.Render("~/bundles/build/css")
+</head>
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="/Admin/HomeAdmin" class="site_title"><i class="fa fa-star"></i> <span>Beautiful Shop!</span></a>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        <div class="profile_pic">
+                            <img src="~/Areas/Admin/Assets/img/avatar.jpg" alt="..." class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+                            <span>Quản Lý</span>
+                            <h2>@user.Ten</h2>
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <h3>Chức Năng</h3>
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a><i class="fa fa-user"></i> Cá Nhân <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/Admin/HomeAdmin/Profile">Thông Tin</a></li>
+                                        <li><a href="#">Đổi Mật Khẩu</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="/Admin/User/ListUser"><i class="fa fa-users"></i> Nhân Viên </a>
+                                </li>
+                                <li>
+                                    <a href="/Admin/KhachHang/ListKhachHang"><i class="fa fa-briefcase"></i> Khách Hàng </a>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-cubes"></i> Kho <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/Admin/Kho/ListSanPham">Sản Phẩm </a></li>
+                                        <li><a href="/Admin/Kho/ListLoai">Loại</a></li>
+                                        <li><a href="/Admin/Kho/ListNSX">Thương Hiệu</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-dollar"></i> Bán Hàng <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/Admin/BanHang/ListHoaDon">Hóa Đơn </a></li>
+                                        <li><a href="/Admin/BanHang/ListDonDat">Đơn Đặt</a></li>
+                                        <li><a href="/Admin/BanHang/ListKhuyenMai">Khuyến Mãi</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- /sidebar menu -->
+                    <!-- /menu footer buttons -->
+                    <div class="sidebar-footer hidden-small">
+                        <a data-toggle="tooltip" data-placement="top" title="Settings">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Lock">
+                            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Logout">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        </div>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <img src="~/Areas/Admin/Assets/img/avatar.jpg" />@user.Username
+                                    <span class=" fa fa-angle-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    <li><a href="javascript:;"> Thông Tin Cá Nhân</a></li>
+                                    <li>
+                                        <a href="javascript:;">
+                                            <span> Đổi Mật Khẩu</span>
+                                        </a>
+                                    </li>
+                                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Đăng Xuât</a></li>
+                                </ul>
+                            </li>
+
+                            <li role="presentation" class="dropdown">
+                                <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-envelope-o"></i>
+                                    <span class="badge bg-green">@list.Count</span>
+                                </a>
+                                <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                                    @{
+                                        int i = 0;
+                                    }
+                                    @foreach (ShopMyPham.Areas.Admin.Models.DonDatModel dd in list)
+                                    {
+                                        if (i == 4)
+                                        {
+                                            break;
+                                        }
+                                        <li>
+                                            <a>
+                                                <span class="image"><i class="fa fa-file-text-o"></i></span>
+                                                <span>
+                                                    <span>Đơn Đặt Hàng</span>
+                                                    <span class="time">@dd.NgayDatHang</span>
+                                                </span>
+                                                <span class="message">
+                                                    @dd.TenKhachHang - @dd.DiaChi
+                                                </span>
+                                            </a>
+                                        </li>
+                                    }
+                                    <li>
+                                        <div class="text-center">
+                                            <a href="/Admin/BanHang/ListDonDat">
+                                                <strong>Xem Tất Cả</strong>
+                                                <i class="fa fa-angle-right"></i>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+            <!-- page content -->
+            @RenderBody()
+            <!-- /page content -->
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    @Scripts.Render("~/bundles/jquery/js")
+    <!-- Bootstrap -->
+    @Scripts.Render("~/bundles/bootstrap/js")
+    <script src="~/Areas/Admin/Assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Areas/Admin/Assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Areas/Admin/Assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/Areas/Admin/Assets/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="~/Areas/Admin/Assets/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/Areas/Admin/Assets/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/Areas/Admin/Assets/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/Areas/Admin/Assets/vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- Custom Theme Scripts -->
+    @Scripts.Render("~/bundles/build/js")
+
+    <!-- Skycons -->
+    <script src="~/Areas/Admin/Assets/vendors/skycons/skycons.js"></script>
+
+    <!-- JQVMap -->
+    <script src="~/Areas/Admin/Assets/vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="~/Areas/Admin/Assets/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="~/Areas/Admin/Assets/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+
+    <!-- JQVMap -->
+    <script>
+        $(document).ready(function () {
+            $('#world-map-gdp').vectorMap({
+                map: 'world_en',
+                backgroundColor: null,
+                color: '#ffffff',
+                hoverOpacity: 0.7,
+                selectedColor: '#666666',
+                enableZoom: true,
+                showTooltip: true,
+                values: sample_data,
+                scaleColors: ['#E6F2F0', '#149B7E'],
+                normalizeFunction: 'polynomial'
+            });
+        });
+    </script>
+    <!-- /JQVMap -->
+    <!-- Skycons -->
+    <script>
+        $(document).ready(function () {
+            var icons = new Skycons({
+                "color": "#73879C"
+            }),
+              list = [
+                "clear-day", "clear-night", "partly-cloudy-day",
+                "partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind",
+                "fog"
+              ],
+              i;
+
+            for (i = list.length; i--;)
+                icons.set(list[i], list[i]);
+
+            icons.play();
+        });
+    </script>
+    <!-- /Skycons -->
+    <!-- Datatables -->
+    <script>
+        $(document).ready(function () {
+            var handleDataTableButtons = function () {
+                if ($("#datatable-buttons").length) {
+                    $("#datatable-buttons").DataTable({
+                        dom: "Bfrtip",
+                        buttons: [
+                          {
+                              extend: "copy",
+                              className: "btn-sm"
+                          },
+                          {
+                              extend: "excel",
+                              className: "btn-sm"
+                          },
+                          {
+                              extend: "print",
+                              className: "btn-sm"
+                          },
+                        ],
+                        responsive: true
+                    });
+                }
+            };
+
+            TableManageButtons = function () {
+                "use strict";
+                return {
+                    init: function () {
+                        handleDataTableButtons();
+                    }
+                };
+            }();
+
+            $('#datatable').dataTable();
+
+            $('#datatable-keytable').DataTable({
+                keys: true
+            });
+
+            $('#datatable-responsive').DataTable();
+
+            $('#datatable-scroller').DataTable({
+                ajax: "js/datatables/json/scroller-demo.json",
+                deferRender: true,
+                scrollY: 380,
+                scrollCollapse: true,
+                scroller: true
+            });
+
+            $('#datatable-fixed-header').DataTable({
+                fixedHeader: true
+            });
+
+            var $datatable = $('#datatable-checkbox');
+
+            $datatable.dataTable({
+                'order': [[1, 'asc']],
+                'columnDefs': [
+                  { orderable: false, targets: [0] }
+                ]
+            });
+            $datatable.on('draw.dt', function () {
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_flat-green'
+                });
+            });
+
+            TableManageButtons.init();
+        });
+    </script>
+    <!-- /Datatables -->
+    <!-- Chart.js -->
+    <script>
+        @{
+            string m = DateTime.Now.Month.ToString();
+            ShopMyPham.Areas.Admin.DAO.ThongKeDAO thongke = new ShopMyPham.Areas.Admin.DAO.ThongKeDAO();
+        }
+        Chart.defaults.global.legend = {
+            enabled: false
+        };
+
+        // Line chart
+        var ctx = document.getElementById("lineChart");
+        var lineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
+                datasets: [{
+                    label: "My First dataset",
+                    backgroundColor: "rgba(38, 185, 154, 0.31)",
+                    borderColor: "rgba(38, 185, 154, 0.7)",
+                    pointBorderColor: "rgba(38, 185, 154, 0.7)",
+                    pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: "rgba(220,220,220,1)",
+                    pointBorderWidth: 1,
+                    data: [@thongke.DTTT(1),@thongke.DTTT(2),@thongke.DTTT(3),@thongke.DTTT(4),@thongke.DTTT(5),@thongke.DTTT(6),@thongke.DTTT(7),@thongke.DTTT(8),@thongke.DTTT(9),@thongke.DTTT(10),@thongke.DTTT(11),@thongke.DTTT(12), ]
+                }, ]
+            },
+        });
+    </script>
+    <!-- /Chart.js -->
+</body>
+</html>

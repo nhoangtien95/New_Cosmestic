@@ -1,0 +1,20 @@
+﻿@model ShopMyPham.ViewModel.IndexViewModel
+
+@{
+    ViewBag.Title = "Trang Chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@*HomeSlider*@
+@Html.Partial("_HomeSliderPartial")
+
+@*Category area*@
+@Html.Action("_CategoryPartial","Home")
+
+@*Promotion + Feautures + Banner area*@
+@Html.Action("_PromotionPartial","Home")
+
+
+

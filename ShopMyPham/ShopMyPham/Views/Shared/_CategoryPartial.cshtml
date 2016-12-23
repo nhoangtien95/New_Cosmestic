@@ -1,0 +1,171 @@
+﻿@{
+    var newArrival = ViewBag.newArrival as List<ShopMyPham.Models.SanPham>;
+    var mostView = ViewBag.mostView as List<ShopMyPham.Models.SanPham>;
+    var onSale = ViewBag.countdown as List<ShopMyPham.Models.SanPham>;
+    var time = ViewBag.time;
+    int now = DateTime.Compare(time[0], DateTime.UtcNow);
+    int count = 0; int hinh = 0;
+}
+<br /><hr /><br />
+<div style="padding-left:75px;">
+    <!-- category-area start -->
+    <div class="category-area">
+        <div class="container">
+            <div class="row">
+                <div class="sale-curosel1">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="sale-title">
+                            <h3>Đang Giảm Giá</h3>
+                        </div>
+                        <div class="sale-curosel">
+                            @foreach (var item in onSale)
+                            {
+                            <!-- product start -->
+                                <div class="single-features">
+                                    <span class="sale-text">Sale</span>
+                                    <div class="product-img">
+                                        <a href="@Url.Action("Index", "Category", new { id = item.SanPhamID, name = item.SEO })">
+                                            @if (item.SanPhamHinhs.Count() > 1)
+                                            {
+                                                <img class="first-img" src="~/Photos/SP/@item.SanPhamHinhs.FirstOrDefault().TenHinh" alt="" />
+                                                <img class="second-img" src="~/Photos/SP/@item.SanPhamHinhs.Skip(1).FirstOrDefault().TenHinh" alt="" />
+                                            }
+                                            else
+                                            {
+                                                <img class="first-img" src="~/Photos/SP/@item.SanPhamHinhs.FirstOrDefault().TenHinh" alt="" />
+                                            }
+                                        </a>
+                                    </div>
+                                    <div class="timer">
+                                        @if (now > 0)
+                                        {
+                                            <div data-countdown="@time[0].Date"></div>
+                                        }
+                                        else
+                                        {
+                                            <div data-countdown="2014/05/01"></div>
+                                        }
+                                    </div>
+                                    <div class="product-content">
+                                        <h5><a href="@Url.Action("Index", "Category", new { id = item.SanPhamID, name = item.SEO })">@item.TenSanPham</a></h5>
+                                        <span class="old-price">@string.Format("{0:#,##0 VND}", item.GiaBan)</span>
+                                        <span class="pro-price">Giá: @string.Format("{0:#,##0 VND}", item.GiaBan - (item.GiaBan * Convert.ToDecimal(0.2)))</span>
+                                    </div>
+                                </div>
+                            <!-- product end -->
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-12">
+                    <div class="category-tab">
+                        <div>
+
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Sản Phâm Mơi</a></li>
+                                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Bán Chạy</a></li>
+                                @*<li role="presentation"><a href="#mostview" aria-controls="messages" role="tab" data-toggle="tab">Top Rated</a></li>*@
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="home">
+                                    <div class="row">
+                                        <div class="category-curosel">
+                                            @for (int i = 0; i < (newArrival.Count() / 3); i++)
+                                            {
+                                                <div class="col-md-6">
+                                                    @{ do
+                                                        {
+                                                            <!-- single-category-tab start -->
+                                                            <div class="single-category-tab">
+                                                                <div class="single-features">
+                                                                    <div class="product-img">
+                                                                        @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "Category", new { id = newArrival[hinh].SanPhamID, name = newArrival[hinh].SEO }, null).ToHtmlString().Replace("[replacetext]",
+"<img style=\"display: block; max - width: 166px; max - height: 166px; width: 166px; height: 166px;\" class=\"first-img\"  src =\"/Photos/SP/" + newArrival[hinh].SanPhamHinhs.First().TenHinh + "\" />  <img style =\"display: block; max - width: 166px; max - height: 166px; width: 166px; height: 166px;\" class=\"second-img\"  src =\"/Photos/SP/" + newArrival[hinh].SanPhamHinhs.Skip(1).First().TenHinh + "\" />"))
+                                                                    </div>
+                                                                    <div class="product-custom">
+                                                                        <h5><a href="@Url.Action("Index", "Category", new { id = @newArrival[hinh].SanPhamID, name = @newArrival[hinh].SEO })">@newArrival[hinh].TenSanPham</a></h5>
+                                                                        @if (newArrival[hinh].IDKhuyenMai == 2)
+                                                                        {
+                                                                            <span class="pro-price">Giá: @string.Format("{0:#,##0 VND}", @newArrival[hinh].GiaBan - (newArrival[hinh].GiaBan * Convert.ToDecimal(0.2)))</span>
+                                                                        }
+                                                                        else if (newArrival[hinh].IDKhuyenMai == 3)
+                                                                        {
+                                                                            <span class="pro-price">Giá: @string.Format("{0:#,##0 VND}", @newArrival[hinh].GiaBan - (newArrival[hinh].GiaBan * Convert.ToDecimal(0.1)))</span>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span class="pro-price">Giá: @string.Format("{0:#,##0 VND}", @newArrival[hinh].GiaBan)</span>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- single-category-tab end -->
+                                                            count++;
+                                                            hinh++;
+                                                        }
+                                                        while (count < 3 && hinh < newArrival.Count());
+                                                    }
+                                                </div>
+                                                            count = 0;
+                                                        }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="profile">
+                                    <div class="row">
+                                        <div class="category-curosel">
+                                            @{ hinh = 0;}
+                                            @for (int i = 0; i < (mostView.Count() / 3); i++)
+                                            {
+                                                <div class="col-md-6">
+                                                    @{ do
+                                                        {
+                                                            <!-- single-category-tab start -->
+                                                            <div class="single-category-tab">
+                                                                <div class="single-features">
+                                                                    <div class="product-img">
+                                                                        @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "Category", new { id = mostView[hinh].SanPhamID, name = newArrival[hinh].SEO }, null).ToHtmlString().Replace("[replacetext]",
+"<img style=\"display: block; max - width: 166px; max - height: 166px; width: 166px; height: 166px;\" class=\"first-img\"  src =\"/Photos/SP/" + mostView[hinh].SanPhamHinhs.First().TenHinh + "\" />  <img style =\"display: block; max - width: 166px; max - height: 166px; width: 166px; height: 166px;\" class=\"second-img\"  src =\"/Photos/SP/" + mostView[hinh].SanPhamHinhs.Skip(1).First().TenHinh + "\" />"))
+
+                                                                    </div>
+                                                                    <div class="product-content">
+                                                                        <h5>@Html.ActionLink(@mostView[hinh].TenSanPham, "Index", "Category", new { id = @mostView[hinh].SanPhamID, name = @mostView[hinh].SEO }, null)</h5>
+                                                                        @if (mostView[hinh].IDKhuyenMai == 2)
+                                                                        {
+                                                                            <span class="pro-price">@string.Format("{0:#,##0 VND}", @mostView[hinh].GiaBan - (mostView[hinh].GiaBan * Convert.ToDecimal(0.2)))</span>
+                                                                        }
+                                                                        else if (mostView[hinh].IDKhuyenMai == 3)
+                                                                        {
+                                                                            <span class="pro-price">@string.Format("{0:#,##0 VND}", @mostView[hinh].GiaBan - (mostView[hinh].GiaBan * Convert.ToDecimal(0.1)))</span>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span class="pro-price">@string.Format("{0:#,##0 VND}", @mostView[hinh].GiaBan)</span>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- single-category-tab end -->
+                                                            count++;
+                                                            hinh++;
+                                                        }
+                                                        while (count < 3 && hinh < newArrival.Count());
+                                                    }
+                                                </div>
+                                                            count = 0;
+                                                        }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- category-area end -->
+</div>

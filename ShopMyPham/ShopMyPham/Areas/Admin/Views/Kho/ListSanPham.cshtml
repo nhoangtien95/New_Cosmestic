@@ -1,0 +1,126 @@
+﻿
+@{
+    ViewBag.Title = "Danh Sách Sản Phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var list = (List<ShopMyPham.Areas.Admin.Models.SanPhamModel>)Model;
+}
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3> Kho</h3>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Sản Phẩm</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <button type="button" class="btn btn-success" style="ruby-align:right"><i class="fa fa-plus"></i> Thêm</button>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+
+                        <div class="row">
+                            <table id="datatable-buttons" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Mã</th>
+                                        <th>Giá</th>
+                                        <th>Ngày Thêm</th>
+                                        <th>Loại</th>
+                                        <th>Thương Hiệu</th>
+                                        <th>Số Lần Xem</th>
+                                        <th>Thao Tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (ShopMyPham.Areas.Admin.Models.SanPhamModel sanPham in list)
+                                    {
+                                       
+                                        string idPanel = "#" + sanPham.SanPhamID;                                       
+                                        <tr>
+                                            
+                                            <td>@sanPham.MaSanPham</td>
+                                            <td>@sanPham.GiaBan</td>
+                                            <td>@sanPham.NgayThem</td>
+                                            <td>@sanPham.Loai</td>
+                                            <td>@sanPham.ThuongHieu</td>
+                                            <td>@sanPham.SoLanXem</td>
+                                            <td>
+                                                <a href="" data-toggle="modal" data-target=@idPanel><span class="glyphicon glyphicon-eye-open" aria-hidden="true" style="margin-left:10px;border-radius: 50%;border:1px solid #5A738E;padding:5px 5px;"></span></a>
+                                                <a href=""><span class="glyphicon glyphicon-pencil" aria-hidden="true" style="margin-left:10px;border-radius: 50%;border:1px solid #5A738E;padding:5px 5px;"></span></a>
+                                                <a href=""><span class="glyphicon glyphicon-remove" aria-hidden="true" style="margin-left:10px;border-radius: 50%;border:1px solid #5A738E;padding:5px 5px;"></span></a>
+                                            </td>
+                                        </tr>                                        
+                                        <div class="modal fade bs-example-modal-lg" id=@sanPham.SanPhamID tabindex="-1" role="dialog">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title">Thông Tin Sản Phẩm</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="x_panel" style="border:none">
+                                                                    <div class="x_title">
+                                                                        <h2>@sanPham.MaSanPham</h2>
+                                                                        <div class="clearfix"></div>
+                                                                    </div>
+                                                                    <div class="x_content">
+                                                                        <div class="col-md-7 col-sm-7 col-xs-12">
+                                                                            <div class="product-image">
+                                                                                <img src="~/Photos/SP/@sanPham.SanPhamHinhs.FirstOrDefault().TenHinh" alt="..." />
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-5 col-sm-5 col-xs-12" style="border:0px solid #e5e5e5;">
+
+                                                                            <h3 class="prod_title">@sanPham.TenSanPham</h3>
+
+                                                                            <p>@sanPham.Mota</p>
+                                                                            <h4>Loại: @sanPham.Loai</h4>
+                                                                            <h4>Thương Hiệu: @sanPham.ThuongHieu</h4>
+                                                                            <h4>Lượt Xem: @sanPham.SoLanXem</h4>
+                                                                            <br />
+
+                                                                            <div class="">
+                                                                                <div class="product_price">
+                                                                                    <h1 class="price">@string.Format("{0:#,##0 VND}", @sanPham.GiaBan)</h1>                                                                                    
+                                                                                    <span class="price-tax">Khuyến Mãi:@sanPham.IDKhuyenMai</span>
+                                                                                    <br>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <h4>Ngày Thêm: @sanPham.NgayThem</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

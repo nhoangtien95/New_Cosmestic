@@ -1,0 +1,136 @@
+﻿@{
+    var newArrival = ViewBag.newArrival as List<ShopMyPham.Models.SanPham>;
+    var featuredProducts = ViewBag.featuredProducts as List<ShopMyPham.Models.SanPham>;
+}
+<div style="padding-left:75px;">
+    <!-- promotion-area start -->
+    <div class="promotion-area">
+        <div class="container">
+            <div class="row">
+                <!-- single-promo start -->
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="single-promo">
+                        <a href="#"><img src="/Content/img/promotion/1.jpg" alt="" /></a>
+                    </div>
+                </div>
+                <!-- single-promo end -->
+                <!-- single-promo start -->
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="single-promo">
+                        <a href="#"><img src="/Content/img/promotion/2.jpg" alt="" /></a>
+                    </div>
+                </div>
+                <!-- single-promo end -->
+                <!-- single-promo start -->
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="single-promo">
+                        <a href="#"><img src="/Content/img/promotion/3.jpg" alt="" /></a>
+                    </div>
+                </div>
+                <!-- single-promo end -->
+            </div>
+        </div>
+    </div>
+    <!-- promotion-area end -->
+    @*Feature area*@
+    <!-- features-area start -->
+    <div class="features-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="section-heading">
+                        <h3>Các Sản Phẩm Đề Xuất</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="features-curosel">
+                    @foreach (var item in featuredProducts)
+                    {
+                        if (@item.SanPhamHinhs.Count() > 1)
+                        {
+                            <div class="col-md-3">
+                                <div class="single-features">
+                                    <div class="product-img">
+                                        @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "Category", new { id = @item.SanPhamID, name = @item.SEO }, null).ToHtmlString().Replace("[replacetext]",
+                                       "<img style=\"display: block; max - width: 300px; max - height: 300px; width: 300px; height: 300px;\" class=\"first-img\"  src =\"/Photos/SP/" + @item.SanPhamHinhs.First().TenHinh + "\" />  <img style =\"display: block; max - width: 300px; max - height: 300px; width: 300px; height: 300px;\" class=\"second-img\"  src =\"/Photos/SP/" + @item.SanPhamHinhs.Skip(1).First().TenHinh + "\" />"))
+
+                                        @Html.ActionLink("Xem Ngay", "Index", "Category", new { id = @item.SanPhamID, name = @item.SEO }, new { @class = "modal-view" })
+                                    </div>
+                                    <div class="product-content" >
+                                        <h5><a href="@Url.Action("Index", "Category", new { id = @item.SanPhamID, name = @item.SEO })" style="height:60px; max-height:60px">@item.TenSanPham</a></h5>
+                                        @if (item.IDKhuyenMai == 2)
+                                        {
+                                            <span class="pro-price">Giá: @string.Format("{0:#,##0 VND}", item.GiaBan - (item.GiaBan * Convert.ToDecimal(0.2)))</span>
+                                        }
+                                        else if (item.IDKhuyenMai == 3)
+                                        {
+                                            <span class="pro-price">Giá: @string.Format("{0:#,##0 VND}", item.GiaBan - (item.GiaBan * Convert.ToDecimal(0.1)))</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="pro-price">Giá: @string.Format("{0:#,##0 VND}", item.GiaBan)</span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-3">
+                                <div class="single-features">
+                                    <span class="sale-text">Sale</span>
+                                    <div class="product-img">
+                                        @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "Category", new { id = @item.SanPhamID, name = @item.SEO }, null).ToHtmlString().Replace("[replacetext]",
+        "<img style=\"display: block; max - width: 300px; max - height: 300px; width: 300px; height: 300px;\" class=\"first-img\"  src =\"/Photos/SP/" + @item.SanPhamHinhs.First().TenHinh + "\" /> "))
+                                        @Html.ActionLink("Xem Ngay", "Index", "Category", new { id = @item.SanPhamID, name = @item.SEO }, new { @class = "modal-view" })
+                                    </div>
+                                    <div class="product-content">
+                                        <h5><a href="@Url.Action("Index", "Category", new { id = @item.SanPhamID, name = @item.SEO })" style="height:60px; max-height:60px">@item.TenSanPham</a></h5>
+                                        @if (item.IDKhuyenMai == 2)
+                                        {
+                                            <span class="pro-price">Giá: @string.Format("{0:#,##0 VND}", item.GiaBan - (item.GiaBan * Convert.ToDecimal(0.2)))</span>
+                                        }
+                                        else if (item.IDKhuyenMai == 3)
+                                        {
+                                            <span class="pro-price">Giá: @string.Format("{0:#,##0 VND}", item.GiaBan - (item.GiaBan * Convert.ToDecimal(0.1)))</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="pro-price">Giá: @string.Format("{0:#,##0 VND}", item.GiaBan)</span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- features-area end -->
+    @*Banner area*@
+    <!-- banner-area start -->
+    <div class="banner-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="section-heading">
+                        <h3>Sản Phẩm Mới</h3>
+                    </div>
+                </div>
+            </div>
+            @foreach (var item in newArrival)
+            {
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="single-banner banner-space ">
+                        <a>@Html.Raw(@Html.ActionLink("[replacetext]", "Index", "Category", new { id = @item.SanPhamID, name = @item.SEO }, null).ToHtmlString().Replace("[replacetext]", "<img style=\"display: block; max - width: 300px; max - height: 300px; width: 300px; height: 300px;\" src =\"/Photos/SP/" + item.SanPhamHinhs.FirstOrDefault().TenHinh + "\" />"))</a>
+                    </div>
+                </div>
+            }
+
+
+        </div>
+    </div>
+    <!-- banner-area end -->
+</div>

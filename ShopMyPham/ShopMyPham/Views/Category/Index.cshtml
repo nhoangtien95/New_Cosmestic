@@ -1,0 +1,161 @@
+﻿@model ShopMyPham.Models.SanPham
+@{
+    ViewBag.Title = Model.TenSanPham;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var Brand = ViewBag.Brand as List<ShopMyPham.Models.ThuongHieu>;
+    var relatedProduct = ViewBag.relatedProduct as List<ShopMyPham.Models.SanPham>;
+}
+
+<style>
+    .buyProduct:hover {
+        box-shadow: 0px 0px 9px rgba(0, 0, 0, 10);
+    }    
+</style>
+
+
+<br /><br />
+<!-- product-main-area start -->
+<div class="product-main-area">
+    <div class="container">
+        <div class="row">
+            <!-- product-page-photo start -->
+            <div class="col-lg-7 col-md-7 col-sm-12">
+                <div class="product-page-photo">
+                    <div class="product-page-2-tab">
+                        <div>
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist"></ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="one">
+                                    <a><img src="~/Photos/SP/@Model.SanPhamHinhs.First().TenHinh" alt="" /></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- product-page-photo end -->
+            <div class="col-lg-5 col-md-5 col-sm-12">
+                <div class="product-page-content" style="overflow:hidden">
+                    <div class="pro-page-title">
+                        <h1>@Model.TenSanPham</h1>
+                    </div>
+                    @if (Model.IDKhuyenMai == 1)
+                    {
+                        <div class="product-page-price">
+                            <span class="pro-price">Giá: @string.Format("{0:#,##0 VND}", @Model.GiaBan)</span>
+                        </div>
+                    }
+                    else if (Model.IDKhuyenMai == 2)
+                    {
+                        var sale = Model.GiaBan;
+                        var price = sale - (sale * Convert.ToDecimal(0.2));
+                        <div class="product-page-price">
+                            <span class="old-price">Giá: @string.Format("{0:#,##0 VND}", @Model.GiaBan)</span>
+                            <br />
+                            <span class="pro-price">Chỉ còn: @string.Format("{0:#,##0 VND}", price)</span>
+                        </div>
+                    }
+                    else
+                    {
+                        var sale = Model.GiaBan;
+                        var price = sale - (sale * Convert.ToDecimal(0.1));
+                        <div class="product-page-price">
+                            <span class="old-price">Giá: @string.Format("{0:#,##0 VND}", @Model.GiaBan)</span>
+                            <br />
+                            <span class="pro-price">Chỉ còn: @string.Format("{0:#,##0 VND}", price)</span>
+                        </div>
+                    }
+                    <div class="pro-shor-desc">
+                        <p>@Model.Mota</p>
+                    </div>
+                    <div class="product-total-cart" style="height:65px; padding-top:6px;">
+                        <input type="number" id="quantity" value="1" min="1" max="10" />
+                        <input type="hidden" id="product-id" value="@Model.SanPhamID" />
+                        <input type="button" class="buyProduct btn btn-default" style="width:120px;" value="Đặt Hàng" />
+                    </div>
+
+                    <div class="product-meta">
+                        <span class="posted-in">
+                            Loại:
+                            <a href="#"> @Brand.First().TenTH</a>
+                        </span>
+                    </div>
+
+                    <div id="show_message" style="display:none">
+                        @*class="product-page-price">*@
+                        <div class="alert alert-warning" role="alert">
+                            <span class="pro-price"> Đã thêm sản phẩm vào giỏ hàng </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="product-share-icon">
+                    <a class="facebook" href="#"><i class="fa fa-facebook"></i></a>
+                    <a class="twitter" href="#"><i class="fa fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="product-tab">
+                    <div>
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Mô Tả</a></li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="home">
+                                <div class="product-page-tab-content">
+                                    @foreach (var item in Model.SanPhamHinhs.Skip(1))
+                                    {
+                                        <img style="display:block; margin:0 auto" src="~/Photos/SP/@item.TenHinh" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- product-main-area end -->
+
+<div class="brand-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-heading">
+                    <h3>Các Sản Phẩm Liên Quan</h3>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="brand-curosel">
+                    @foreach (var item in relatedProduct)
+                    {
+                        <div class="single-category-tab" style="margin-left: 10px;">
+                            <div class="single-features">
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "Category", new { id = item.SanPhamID, name = item.SEO }, null).ToHtmlString().Replace("[replacetext]",
+                            "<img style=\"display: block; margin:0 auto; padding-top:10px; max - width: 150px; max - height: 150px; width: 150px; height: 150px;\" class=\"first-img\"  src =\"/Photos/SP/" + item.SanPhamHinhs.First().TenHinh + "\" />"))
+
+                                <div class="product-custom">
+                                    <h5><a href="@Url.Action("Index", "Category", new { id = item.SanPhamID, name = item.SEO })">@item.TenSanPham</a></h5>
+                                    <span class="pro-price" style="text-align:center;">Giá: @string.Format("{0:#,##0 VND}", @item.GiaBan)</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
