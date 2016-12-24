@@ -35,7 +35,8 @@ namespace ShopMyPham.Areas.Admin.DAO
                 sanPham.Loai = loaiDAO.GetByID(result.IDLoai).Ten;
                 sanPham.SoLanXem = result.SoLanXem;
                 sanPham.NgayThem = result.NgayThem;
-                sanPham.IDKhuyenMai = khuyenMaiDAO.GetByID(result.IDKhuyenMai).Ten;
+                sanPham.IDKhuyenMai = khuyenMaiDAO.GetByID(result.IDKhuyenMai).KhuyenMaiID;
+                sanPham.KhuyenMai = khuyenMaiDAO.GetByID(result.IDKhuyenMai).Ten;
                 sanPham.SEO = result.SEO;
                 sanPham.SanPhamHinhs = result.SanPhamHinhs;
                 l.Add(sanPham);

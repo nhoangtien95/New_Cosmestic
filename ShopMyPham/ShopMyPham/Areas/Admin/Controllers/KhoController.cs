@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using ShopMyPham.Models;
 using ShopMyPham.Areas.Admin.Models;
+using System.IO;
 
 namespace ShopMyPham.Areas.Admin.Controllers
 {
@@ -18,11 +19,11 @@ namespace ShopMyPham.Areas.Admin.Controllers
         {
             var th = db.ThuongHieux.Where(x => x.TrangThai == 1).ToList();
             var categories = new List<ProductModel>
-            {                
-                new ProductModel {IDThuongHieu = 0, ThuongHieu = "All"}                
+            {
+                new ProductModel {IDThuongHieu = 0, ThuongHieu = "All"}
             };
 
-            foreach(var item in th)
+            foreach (var item in th)
             {
                 categories.Add(new ProductModel()
                 {
@@ -96,11 +97,14 @@ namespace ShopMyPham.Areas.Admin.Controllers
                 sanPham.GiaBan = result.GiaBan;
                 sanPham.TrangThai = result.TrangThai;
                 sanPham.Mota = result.Mota;
+                sanPham.IDThuongHieu = db.ThuongHieux.Single(x => x.ID == result.IDThuongHieu).ID;
                 sanPham.ThuongHieu = db.ThuongHieux.Single(x => x.ID == result.IDThuongHieu).TenTH;
-                sanPham.Loai =  db.Loais.Single(x => x.ID == result.IDLoai).Ten;
+                sanPham.IDLoai = db.Loais.Single(x => x.ID == result.IDLoai).ID;
+                sanPham.Loai = db.Loais.Single(x => x.ID == result.IDLoai).Ten;
                 sanPham.SoLanXem = result.SoLanXem;
                 sanPham.NgayThem = result.NgayThem;
-                sanPham.IDKhuyenMai = db.KhuyenMais.Single(x => x.KhuyenMaiID == result.IDKhuyenMai).Ten;
+                sanPham.IDKhuyenMai = db.KhuyenMais.Single(x => x.KhuyenMaiID == result.IDKhuyenMai).KhuyenMaiID;
+                sanPham.KhuyenMai = db.KhuyenMais.Single(x => x.KhuyenMaiID == result.IDKhuyenMai).Ten;
                 sanPham.SEO = result.SEO;
                 sanPham.SanPhamHinhs = result.SanPhamHinhs;
                 list.Add(sanPham);
@@ -112,11 +116,79 @@ namespace ShopMyPham.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult addSanPham(ProductModel model)
+        public ActionResult addSanPham(ProductModel model, IEnumerable<HttpPostedFileBase> files)
         {
+            var sp = new SanPham()
+            {
+                MaSanPham = model.MaSanPham,
+                TenSanPham = model.TenSanPham,
+                GiaBan = model.GiaBan,
+                Mota = model.Mota,
+                IDThuongHieu = model.IDThuongHieu,
+                IDLoai = model.IDLoai,
+                IDKhuyenMai = model.IDKhuyenMai,
+                TrangThai = 1,
+                SoLanXem = 0,
+                NgayThem = DateTime.UtcNow,
+                SEO = model.SEO
+            };
+            db.SanPhams.AddObject(sp);
+            db.SaveChanges();
+
+            //
+            var ktHinh = new[] { ".png", ".jpg", ".jpeg" };
+            foreach (var item in files)
+            {
+                var fileName = Path.GetFileName(item.FileName);
+                var ext = Path.GetExtension(item.FileName);
+
+                if (ktHinh.Contains(ext))
+                {
+                    string name = Path.GetFileNameWithoutExtension(fileName);
+                    string productImage = name + ext;
+                    var maSP = db.SanPhams.Single(x => x.MaSanPham == model.MaSanPham).SanPhamID;
+                    byte count = 1;
+
+                    var img = new SanPhamHinh()
+                    {
+                        TenHinh = name + ext,
+                        NgayThem = DateTime.UtcNow,
+                        SoLanXem = 0,
+                        SanPhamID = maSP,
+                        ThuTuHienThi = count                        
+                    };
+                    db.SanPhamHinhs.AddObject(img);
+                    count++;
+
+                    db.SaveChanges();
+
+                    item.SaveAs(Server.MapPath("~/Photos/SP/" + productImage));
+                }
+            }
+            
+
             return RedirectToAction("ListSanPham");
         }
 
+        [HttpPost]
+        public ActionResult editSanPham(ProductModel model, IEnumerable<HttpPostedFileBase> files)
+        {
+            var sp = db.SanPhams.Single(x => x.SanPhamID == model.SanPhamID);
+            sp.MaSanPham = model.MaSanPham;
+            sp.TenSanPham = model.TenSanPham;
+            sp.GiaBan = model.GiaBan;
+            sp.Mota = model.Mota;
+            sp.IDThuongHieu = model.IDThuongHieu;
+            sp.IDLoai = model.IDLoai;
+            sp.IDKhuyenMai = model.IDKhuyenMai;
+            sp.SEO = model.SEO;
+
+            db.ObjectStateManager.ChangeObjectState(sp, System.Data.Entity.EntityState.Modified);
+            db.SaveChanges();
+                        //    
+
+            return RedirectToAction("ListSanPham");
+        }
         public ActionResult ListLoai()
         {
             LoaiDAO dao = new LoaiDAO();
