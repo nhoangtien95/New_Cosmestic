@@ -1,20 +1,20 @@
-﻿
+﻿@model ShopMyPham.Areas.Admin.Models.ProductModel
 @{
     ViewBag.Title = "Danh Sách Sản Phẩm";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
-    var list = (List<ShopMyPham.Areas.Admin.Models.SanPhamModel>)Model;
+    //var list = (List<ShopMyPham.Areas.Admin.Models.SanPhamModel>)Model;
+    var list = ViewBag.list as List<ShopMyPham.Areas.Admin.Models.SanPhamModel>;   
 }
+
 
 <div class="right_col" role="main">
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3> Kho</h3>
+                <h3>Kho</h3>
             </div>
-        </div>
-
+        </div>        
         <div class="clearfix"></div>
-
         <div class="row">
             <div class="col-md-12">
                 <div class="x_panel">
@@ -40,44 +40,50 @@
                                     <div class="x_panel" style="border:none">
                                         <div class="x_content">
                                             <br>
-                                            @using (Html.BeginForm("addCustomer", "KhachHang", FormMethod.Post))
+                                            @using (Html.BeginForm("addSanPham", "Kho", FormMethod.Post))
                                             {
                                                 <div class="form-horizontal form-label-left input_mask">
-                                                    <div class="form-group">
+                                                    <div class="form-group">                                                        
+                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
+                                                            @Html.TextBoxFor(x => x.MaSanPham, new { @class = "form-control has-feedback-left", @placeholder = "Mã sản phẩm", @required = "required" })
+                                                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                                        </div>
 
                                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
-                                                            <input type="text" class="form-control has-feedback-left" name="MaSanPham" required="required" placeholder="Tài Khoản">
-                                                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
-                                                            <input type="password" class="form-control has-feedback-left" name="TenSanPham" required="required" placeholder="Mật Khẩu">
-                                                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
-                                                            <input type="text" class="form-control has-feedback-left" name="GiaBan" required="required" placeholder="Họ Tên">
-                                                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
-                                                            <input type="text" class="form-control has-feedback-left" name="Mota" required="required" placeholder="Địa Chỉ">
-                                                            <span class="fa fa-building form-control-feedback left" aria-hidden="true"></span>
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
-                                                            <input type="text" class="form-control has-feedback-left" name="ThuongHieu" required="required" placeholder="Số Điện Thoại">
-                                                            <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
-                                                            <input type="text" class="form-control has-feedback-left" name="Loai" required="required" placeholder="Email">
-                                                            <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
-                                                            <input type="text" class="form-control has-feedback-left" name="IDKhuyenMai" required="required" placeholder="Email">
+                                                            Tên Sản Phẩm: @Html.TextBoxFor(x => x.TenSanPham, new { @class = "form-control has-feedback-left", @placeholder = "Tên sản phẩm", @required = "required" })
                                                             
-                                                            <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
                                                         </div>
+
                                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
-                                                            <input type="text" class="form-control has-feedback-left" name="SEO" required="required" placeholder="Email">
-                                                            <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                                                            Giá Sản Phẩm: @Html.TextBoxFor(x => x.GiaBan, new { @class = "form-control has-feedback-left", @placeholder = "Giá sản phẩm", @required = "required" })
+                                                            
                                                         </div>
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
+                                                            Mô Tả Sản Phẩm: @Html.TextBoxFor(x => x.Mota, new { @class = "form-control has-feedback-left", @placeholder = "Mô tả sản phẩm", @required = "required" })
+                                                            
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
+                                                            Thương hiệu: @Html.DropDownListFor(x => x.IDThuongHieu, ViewBag.th as SelectList, new { @class = "form-control has-feedback-left",  @required = "required" })
+                                                            
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
+                                                            Loại Sản Phẩm: @Html.DropDownListFor(x => x.IDLoai, ViewBag.loai as SelectList, new { @class = "form-control has-feedback-left", @required = "required" })
+                                                            
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
+                                                          Khuyến Mãi: @Html.DropDownListFor(x => x.IDKhuyenMai, ViewBag.km as SelectList, new { @class = "form-control has-feedback-left", @required = "required" })
+                                                            
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
+                                                            SEO: @Html.TextBoxFor(x => x.SEO, new { @class = "form-control has-feedback-left", @placeholder = "SEO", @required = "required" })
+                                                            
+                                                        </div>
+
                                                     </div>
                                                     <div class="ln_solid"></div>
                                                     <div class="form-group">

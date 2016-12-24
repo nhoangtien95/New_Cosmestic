@@ -27,7 +27,7 @@ namespace ShopMyPham.Controllers
         #endregion
 
 
-        #region Index
+        #region Cart
 
         /// <summary>
         ///     Hiển thị giỏ hàng ở layout
