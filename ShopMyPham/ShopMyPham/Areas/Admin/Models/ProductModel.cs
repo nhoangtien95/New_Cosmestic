@@ -26,5 +26,6 @@ namespace ShopMyPham.Areas.Admin.Models
         public string KhuyenMai { get; set; }
         public SelectList KhuyenMaiSelected { get; set; }
         public string SEO { get; set; }
+        public int IDHinh { get; set; }
     }
 }

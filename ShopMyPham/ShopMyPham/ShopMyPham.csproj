@@ -187,12 +187,14 @@
     <Compile Include="Areas\Admin\Models\AdminEditModel.cs" />
     <Compile Include="Areas\Admin\Models\CustomerEditModel.cs" />
     <Compile Include="Areas\Admin\Models\DonDatModel.cs" />
+    <Compile Include="Areas\Admin\Models\ImgEditModel.cs" />
     <Compile Include="Areas\Admin\Models\KhachHangModel.cs" />
     <Compile Include="Areas\Admin\Models\KhuyenMaiModel.cs" />
     <Compile Include="Areas\Admin\Models\NhanVienModel.cs" />
     <Compile Include="Areas\Admin\Models\ProductModel.cs" />
     <Compile Include="Areas\Admin\Models\SanPhamDatModel.cs" />
     <Compile Include="Areas\Admin\Models\SanPhamModel.cs" />
+    <Compile Include="Areas\Admin\Models\ThuongHieuModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\SanPhamViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartController.cs" />

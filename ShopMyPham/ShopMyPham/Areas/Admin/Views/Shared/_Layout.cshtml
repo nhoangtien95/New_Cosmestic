@@ -27,7 +27,6 @@
                 $('.btn-active').off('click').on('click', function () {
                     var text = $(this);
                     var id = text.data('aid');
-                    console.log(id);
                     $.ajax({
                         url: '@Url.Action("statusChange", "KhachHang")',
                         data: { id: id },
@@ -47,6 +46,29 @@
 
         });
        
+        $(function () {
+        
+            $('.btn-activeTH').off('click').on('click', function () {
+                var text = $(this);
+                var id = text.data('thid');
+                $.ajax({
+                    @*url: '@Url.Action("statusTHChange", "Kho")',
+                    data: { idTH: id },*@
+                    url: '/statusTHChange/' + id,
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (response) {
+                        if (response.status == 1) {
+                            text.text("Disable");
+                        }
+                        else {
+                            text.text("Active");
+                        }
+                    }
+                });
+            });
+        });
+
     </script>
 </head>
 

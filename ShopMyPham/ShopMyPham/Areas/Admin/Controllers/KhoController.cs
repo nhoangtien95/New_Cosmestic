@@ -155,7 +155,7 @@ namespace ShopMyPham.Areas.Admin.Controllers
                         NgayThem = DateTime.UtcNow,
                         SoLanXem = 0,
                         SanPhamID = maSP,
-                        ThuTuHienThi = count                        
+                        ThuTuHienThi = count
                     };
                     db.SanPhamHinhs.AddObject(img);
                     count++;
@@ -165,7 +165,7 @@ namespace ShopMyPham.Areas.Admin.Controllers
                     item.SaveAs(Server.MapPath("~/Photos/SP/" + productImage));
                 }
             }
-            
+
 
             return RedirectToAction("ListSanPham");
         }
@@ -185,10 +185,70 @@ namespace ShopMyPham.Areas.Admin.Controllers
 
             db.ObjectStateManager.ChangeObjectState(sp, System.Data.Entity.EntityState.Modified);
             db.SaveChanges();
-                        //    
+            //    
 
             return RedirectToAction("ListSanPham");
         }
+
+        [HttpPost]
+        public ActionResult editSanPhamImg(ProductModel model, HttpPostedFileBase imgFile)
+        {
+            var ktHinh = new[] { ".png", ".jpg", ".jpeg" };
+            var fileName = Path.GetFileName(imgFile.FileName);
+            var ext = Path.GetExtension(imgFile.FileName);
+            var img = db.SanPhamHinhs.Single(x => x.SanPhamHinhID == model.IDHinh);
+
+            img.NgayThem = DateTime.UtcNow;
+            img.SoLanXem = 0;
+
+            if (ktHinh.Contains(ext))
+            {
+                string imgPath = Request.MapPath("~/Photos/SP/" + img.TenHinh);
+                if (System.IO.File.Exists(imgPath))
+                {
+                    System.IO.File.Delete(imgPath);
+                }
+
+                string name = Path.GetFileNameWithoutExtension(fileName);
+                string productImage = name + ext;
+
+                img.TenHinh = name + ext;
+                imgFile.SaveAs(Server.MapPath("~/Photos/SP/" + productImage));
+
+            }
+
+
+
+            db.ObjectStateManager.ChangeObjectState(img, System.Data.Entity.EntityState.Modified);
+            db.SaveChanges();
+            //    
+
+            return RedirectToAction("ListSanPham");
+        }
+
+        [HttpPost]
+        public ActionResult deleteSanPham(int id)
+        {
+            var product = db.SanPhams.Single(x => x.SanPhamID == id);
+            var productImg = db.SanPhamHinhs.Where(x => x.SanPhamID == id).ToList();
+
+            foreach (var img in productImg)
+            {
+                string imgPath = Request.MapPath("~/Photos/SP/" + img.TenHinh);
+                if (System.IO.File.Exists(imgPath))
+                {
+                    System.IO.File.Delete(imgPath);
+                }
+
+                db.SanPhamHinhs.DeleteObject(img);
+            }
+
+            db.SanPhams.DeleteObject(product);
+            db.SaveChanges();
+
+            return RedirectToAction("ListSanPham");
+        }
+
         public ActionResult ListLoai()
         {
             LoaiDAO dao = new LoaiDAO();
@@ -197,9 +257,61 @@ namespace ShopMyPham.Areas.Admin.Controllers
         }
         public ActionResult ListNSX()
         {
-            ThuongHieuDAO dao = new ThuongHieuDAO();
-            var list = dao.GetList();
-            return View(list);
+            ViewBag.list = db.ThuongHieux.ToList();
+            return View();
+        }
+
+        [HttpPost]
+        [Route("statusTHChange/{idTH}")]
+        public JsonResult statusTHChange(int idTH)
+        {
+            var th = db.ThuongHieux.Single(x => x.ID == idTH);
+            if (th.TrangThai == 1)
+            {
+                th.TrangThai = 0;
+            }
+            else if (th.TrangThai == 0)
+            {
+                th.TrangThai = 1;
+            }
+
+            db.SaveChanges();
+            return Json(new
+            {
+                status = th.TrangThai
+            });
+        }
+
+        [HttpPost]
+        public ActionResult addThuongHieu(ThuongHieuModel model, HttpPostedFileBase files)
+        {
+            var th = new ThuongHieu()
+            {
+                TenTH = model.tenTH,
+                SEO = model.SEO,
+                TrangThai = 1
+            };
+
+            var ktHinh = new[] { ".png", ".jpg", ".jpeg" };
+
+            var fileName = Path.GetFileName(files.FileName);
+            var ext = Path.GetExtension(files.FileName);
+
+            if (ktHinh.Contains(ext))
+            {
+                string name = Path.GetFileNameWithoutExtension(fileName);
+                string thImage = name + ext;
+
+                th.HinhTH = name + ext;         
+                                             
+
+                files.SaveAs(Server.MapPath("~/Photos/ThuongHieu/" + thImage));
+            }
+
+            db.ThuongHieux.AddObject(th);
+            db.SaveChanges();
+
+            return RedirectToAction("ListNSX");
         }
 
     }
