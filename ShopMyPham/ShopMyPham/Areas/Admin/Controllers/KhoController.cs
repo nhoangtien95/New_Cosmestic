@@ -251,10 +251,74 @@ namespace ShopMyPham.Areas.Admin.Controllers
 
         public ActionResult ListLoai()
         {
-            LoaiDAO dao = new LoaiDAO();
-            var list = dao.GetList();
-            return View(list);
+            ViewBag.list = db.Loais.Where(x => x.ChungLoaiID == null).ToList();
+            ViewBag.selectLoai = new SelectList(getChungLoaiID(), "chungloaiID", "tenLoai");
+
+            return View();
         }
+
+        public List<LoaiModel> getChungLoaiID()
+        {
+            var loai = db.Loais.Where(x => x.ChungLoaiID == null).ToList();
+            var categories = new List<LoaiModel>();
+            
+            foreach (var item in loai)
+            {
+                categories.Add(new LoaiModel()
+                {
+                    chungloaiID = item.ID,
+                    tenLoai = item.Ten
+                });
+            }
+
+
+            return categories;
+        }
+
+        [HttpPost]
+        public ActionResult addLoai(LoaiModel model)
+        {
+            var count = db.Loais.ToList();
+            var loai = new Loai()
+            {
+                ID = count.Count() + 1,
+                Ten = model.tenLoai,
+                ChungLoaiID = model.chungloaiID,
+                SEO = model.SEO
+            };           
+
+            db.Loais.AddObject(loai);
+            db.SaveChanges();
+
+            return RedirectToAction("ListLoai");
+        }
+
+        [HttpPost]
+        public ActionResult editLoai(LoaiModel model)
+        {            
+            var loai = db.Loais.Single(x => x.ID == model.IDLoai);
+            loai.Ten = model.tenLoai;
+            loai.ChungLoaiID = model.chungloaiID;
+            loai.SEO = model.SEO;
+                        
+
+            db.ObjectStateManager.ChangeObjectState(loai, System.Data.Entity.EntityState.Modified);
+            db.SaveChanges();
+
+            return RedirectToAction("ListLoai");
+        }
+
+        [HttpPost]
+        public ActionResult deleteLoai(int id)
+        {
+            var loai = db.Loais.Single(x => x.ID == id);
+           
+            db.Loais.DeleteObject(loai);
+            db.SaveChanges();
+
+            return RedirectToAction("ListLoai");
+        }
+
         public ActionResult ListNSX()
         {
             ViewBag.list = db.ThuongHieux.ToList();
@@ -302,13 +366,69 @@ namespace ShopMyPham.Areas.Admin.Controllers
                 string name = Path.GetFileNameWithoutExtension(fileName);
                 string thImage = name + ext;
 
-                th.HinhTH = name + ext;         
-                                             
+                th.HinhTH = name + ext;
+
 
                 files.SaveAs(Server.MapPath("~/Photos/ThuongHieu/" + thImage));
             }
 
             db.ThuongHieux.AddObject(th);
+            db.SaveChanges();
+
+            return RedirectToAction("ListNSX");
+        }
+
+        [HttpPost]
+        public ActionResult editThuongHieu(ThuongHieuModel model, HttpPostedFileBase files)
+        {
+            var th = db.ThuongHieux.Single(x => x.ID == model.IDTH);
+            th.TenTH = model.tenTH;
+            th.SEO = model.SEO;
+
+            if (files != null)
+            {
+                var ktHinh = new[] { ".png", ".jpg", ".jpeg" };
+
+                var fileName = Path.GetFileName(files.FileName);
+                var ext = Path.GetExtension(files.FileName);
+
+                if (ktHinh.Contains(ext))
+                {
+                    string imgTHPath = Request.MapPath("~/Photos/ThuongHieu/" + th.HinhTH);
+                    if (System.IO.File.Exists(imgTHPath))
+                    {
+                        System.IO.File.Delete(imgTHPath);
+                    }
+
+                    string name = Path.GetFileNameWithoutExtension(fileName);
+                    string thImage = name + ext;
+
+                    th.HinhTH = name + ext;
+
+
+
+                    files.SaveAs(Server.MapPath("~/Photos/ThuongHieu/" + thImage));
+                }
+            }
+
+
+            db.ObjectStateManager.ChangeObjectState(th, System.Data.Entity.EntityState.Modified);
+            db.SaveChanges();
+
+            return RedirectToAction("ListNSX");
+        }
+
+        [HttpPost]
+        public ActionResult deleteThuongHieu(int id)
+        {
+            var th = db.ThuongHieux.Single(x => x.ID == id);
+            string imgTHPath = Request.MapPath("~/Photos/ThuongHieu/" + th.HinhTH);
+            if (System.IO.File.Exists(imgTHPath))
+            {
+                System.IO.File.Delete(imgTHPath);
+            }
+
+            db.ThuongHieux.DeleteObject(th);
             db.SaveChanges();
 
             return RedirectToAction("ListNSX");

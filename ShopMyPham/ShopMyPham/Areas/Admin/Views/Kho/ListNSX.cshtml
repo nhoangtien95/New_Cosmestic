@@ -29,7 +29,7 @@
                         </ul>
                         <div class="clearfix"></div>
                     </div>
-
+                    @*Popup model Add Brand*@
                     <div class="modal fade" id="addTH" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -86,6 +86,8 @@
                             <tbody>
                                 @foreach (ShopMyPham.Models.ThuongHieu thuongHieu in list)
                                 {
+                                    string editTH = "edit" + thuongHieu.ID;
+                                    string deleteTH = "delete" + thuongHieu.ID;
                                     <tr>
                                         <td>@thuongHieu.ID</td>
                                         <td>@thuongHieu.TenTH</td>
@@ -102,10 +104,77 @@
                                             </td>
                                         }
                                         <td>
-                                            <a href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true" style="margin-left:10px;border-radius: 50%;border:1px solid #5A738E;padding:5px 5px;"></span></a>
-                                            <a href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true" style="margin-left:10px;border-radius: 50%;border:1px solid #5A738E;padding:5px 5px;"></span></a>
+                                            <a href="#" data-toggle="modal" data-target=".@editTH"><span class="glyphicon glyphicon-pencil" aria-hidden="true" style="margin-left:10px;border-radius: 50%;border:1px solid #5A738E;padding:5px 5px;"></span></a>
+                                            <a href="#"data-toggle="modal" data-target=".@deleteTH"><span class="glyphicon glyphicon-remove" aria-hidden="true" style="margin-left:10px;border-radius: 50%;border:1px solid #5A738E;padding:5px 5px;"></span></a>
                                         </td>
                                     </tr>
+
+                                    //Poptup model Edit Brand
+                                    <div class="modal fade @editTH"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title">Chỉnh Sửa Thương Hiệu</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="x_panel" style="border:none">
+                                                        <div class="x_content">
+                                                            <br>
+                                                            @using (Html.BeginForm("editThuongHieu", "Kho", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                                            {
+                                                                <div class="form-horizontal form-label-left input_mask">
+                                                                    <div class="form-group">
+                                                                        @Html.TextBoxFor(x => x.IDTH, new { @type = "hidden", @Value = thuongHieu.ID})
+                                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
+                                                                            Tên Thương Hiệu: @Html.TextBoxFor(x => x.tenTH, new { @class = "form-control has-feedback-left", @placeholder = "Tên Thương Hiệu", @required = "required", @Value = thuongHieu.TenTH })
+                                                                        </div>
+                                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" style="width:100%">
+                                                                            SEO Thương Hiệu: @Html.TextBoxFor(x => x.SEO, new { @class = "form-control has-feedback-left", @placeholder = "SEO Thương Hiệu", @required = "required", @Value = thuongHieu.SEO })
+                                                                        </div>
+
+                                                                        <img style="max-width: 150px; max-height: 180px; width: 150px; height: 180px;" src="~/Photos/ThuongHieu/@thuongHieu.HinhTH"/>
+                                                                        Chọn hình mới để chỉnh sửa: <input type="file" name="files" />
+                                                                    </div>
+                                                                    <div class="ln_solid"></div>
+                                                                    <div class="form-group">
+                                                                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                                                            <button type="submit" class="btn btn-success">Xác Nhận</button>
+                                                                            <button type="reset" class="btn btn-primary">Nhập Lại</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            }
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    //Popup modal Delete Brand
+                                    <div class="modal fade @deleteTH" role="dialog">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">Xóa Thương Hiệu</h4>
+                                                </div>
+
+                                                @using (Html.BeginForm("deleteThuongHieu", "Kho", new { id = thuongHieu.ID }, FormMethod.Post))
+                                                {
+                                                    <div class="modal-body">
+                                                        Bạn muốn xóa <b>@thuongHieu.TenTH</b> ?
+                                                    </div>
+                                                        <div class="modal-footer">
+                                                            <input id="btnSubmit" class="btn btn-default" type="submit" value="Có" />
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                                                        </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
                                 }
                             </tbody>
                         </table>
