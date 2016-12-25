@@ -1,0 +1,22 @@
+﻿@model   ShopMyPham.Models.UserModel
+@{
+    ViewBag.Title = "userInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var user = Session["user"] as ShopMyPham.Models.QuanTri;
+}
+
+<br /><br />
+<div style="padding-left: 75px;">
+    @using (Html.BeginForm())
+    {
+        <h2><b>THÔNG TIN CÁ NHÂN</b></h2>
+        <hr />
+        
+        <b>Username: </b> @user.Username <br />
+        <b>Tên: </b> @Html.TextBoxFor(x => x.ten, new { @Value = user.Ten })<br />
+        <b>Địa chỉ: </b> @Html.TextBoxFor(x => x.diachi, new { @Value = user.DiaChi })<br />
+        <b>Số điện thoại: </b> @Html.TextBoxFor(x => x.sdt, new { @Value = user.Sdt })<br />
+        <b>Email: </b> @Html.TextBoxFor(x => x.email, new { @Value = user.Email })<br />
+    }
+</div>
+

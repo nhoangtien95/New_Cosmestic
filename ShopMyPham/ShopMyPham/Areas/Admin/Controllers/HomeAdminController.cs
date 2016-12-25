@@ -24,6 +24,40 @@ namespace ShopMyPham.Areas.Admin.Controllers
             return View();
         }
 
+        public ActionResult changePassword()
+        {
+            
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult changePassword(AdminEditModel model)
+        {
+            var user = db.QuanTris.Single(x => x.ID == model.id);
+
+            if (user. Password == model.password)
+            {
+                if(model.newpassword == model.passwordComfirm)
+                {
+                    user.Password = model.passwordComfirm;
+
+                    db.ObjectStateManager.ChangeObjectState(user, System.Data.Entity.EntityState.Modified);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Mật khẩu không trùng khớp !!");
+                    return View();
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Mật khẩu hiện tại không đúng !!");
+                return View();
+            }
+
+            return RedirectToAction("Profile");
+        }
         
         public ActionResult adminEdit()
         {
@@ -42,6 +76,13 @@ namespace ShopMyPham.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Profile");
             
+        }
+
+        public ActionResult logOut()
+        {
+            Session["user"] = null;
+
+            return RedirectToAction("Index", "Home", new { Area = "" });
         }
     }
 }

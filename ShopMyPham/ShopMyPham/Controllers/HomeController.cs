@@ -250,5 +250,20 @@ namespace ShopMyPham.Controllers
 
             return View();
         }
-    } 
+
+        #region UserInfo
+
+        /// <summary>
+        ///     Hiển thị thông tin người dùng
+        /// </summary>
+        public ActionResult userInfo()
+        {
+             if(Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Client");
+            }
+            return View();
+        }
+        #endregion
+    }
 }

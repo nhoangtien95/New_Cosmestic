@@ -30,7 +30,7 @@
                     else
                     {
                         <ul>
-                            <li>Xin chào, @user.Ten</li>
+                            <li>Xin chào, <b><a href="@Url.Action("userInfo", "Home")">@user.Ten</a></b></li>
                             <li>@Html.ActionLink("Đăng xuất","Logout","Client")</li>
                         </ul>
                     }

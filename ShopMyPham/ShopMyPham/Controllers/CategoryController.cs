@@ -45,6 +45,7 @@ namespace ShopMyPham.Controllers
         #endregion
 
 
+        [Route("thuong-hieu")]
         public ActionResult BrandCategory(int id)
         {
             var viewModel = db.ThuongHieux.SingleOrDefault(x => x.ID == id);

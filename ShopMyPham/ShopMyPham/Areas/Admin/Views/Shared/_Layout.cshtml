@@ -78,7 +78,7 @@
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="/Admin/HomeAdmin" class="site_title"><i class="fa fa-star"></i> <span>Beautiful Shop!</span></a>
+                        <a href="@Url.Action("Admin", "HomeAdmin")" class="site_title"><i class="fa fa-star"></i> <span>Cosmetic Shop!</span></a>
                     </div>
 
                     <div class="clearfix"></div>
@@ -105,30 +105,29 @@
                                 <li>
                                     <a><i class="fa fa-user"></i> Cá Nhân <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="/Admin/HomeAdmin/Profile">Thông Tin</a></li>
-                                        <li><a href="#">Đổi Mật Khẩu</a></li>
+                                        <li><a href="@Url.Action("Profile", "HomeAdmin")">Thông Tin</a></li>
+                                        <li><a href="@Url.Action("changePassword", "HomeAdmin")">Đổi Mật Khẩu</a></li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="/Admin/User/ListUser"><i class="fa fa-users"></i> Nhân Viên </a>
+                                    <a href="@Url.Action("ListUser", "User")"><i class="fa fa-users"></i> Nhân Viên </a>
                                 </li>
                                 <li>
-                                    <a href="/Admin/KhachHang/ListKhachHang"><i class="fa fa-briefcase"></i> Khách Hàng </a>
+                                    <a href="@Url.Action("ListKhachHang", "KhachHang")"><i class="fa fa-briefcase"></i> Khách Hàng </a>
                                 </li>
                                 <li>
                                     <a><i class="fa fa-cubes"></i> Kho <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="/Admin/Kho/ListSanPham">Sản Phẩm </a></li>
-                                        <li><a href="/Admin/Kho/ListLoai">Loại</a></li>
-                                        <li><a href="/Admin/Kho/ListNSX">Thương Hiệu</a></li>
+                                        <li><a href="@Url.Action("ListSanPham", "Kho")">Sản Phẩm </a></li>
+                                        <li><a href="@Url.Action("ListLoai", "Kho")">Loại</a></li>
+                                        <li><a href="@Url.Action("ListNSX", "Kho")">Thương Hiệu</a></li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a><i class="fa fa-dollar"></i> Bán Hàng <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="/Admin/BanHang/ListHoaDon">Hóa Đơn </a></li>
-                                        <li><a href="/Admin/BanHang/ListDonDat">Đơn Đặt</a></li>
-                                        <li><a href="/Admin/BanHang/ListKhuyenMai">Khuyến Mãi</a></li>
+                                        <li><a href="@Url.Action("ListHoaDon", "BanHang")">Hóa Đơn </a></li>
+                                        <li><a href="@Url.Action("ListDonDat", "BanHang")">Đơn Đặt </a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -170,13 +169,13 @@
                                     <span class="fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                    <li><a href="javascript:;"> Thông Tin Cá Nhân</a></li>
+                                    <li><a href="@Url.Action("Profile", "HomeAdmin")"> Thông Tin Cá Nhân</a></li>
                                     <li>
-                                        <a href="javascript:;">
+                                        <a href="@Url.Action("changePassword", "HomeAdmin")">
                                             <span> Đổi Mật Khẩu</span>
                                         </a>
                                     </li>
-                                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Đăng Xuât</a></li>
+                                    <li><a href="@Url.Action("logOut", "HomeAdmin")"><i class="fa fa-sign-out pull-right"></i> Đăng Xuât</a></li>
                                 </ul>
                             </li>
 

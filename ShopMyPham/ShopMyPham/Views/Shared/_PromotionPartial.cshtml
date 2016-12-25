@@ -122,11 +122,61 @@
             </div>
             @foreach (var item in newArrival)
             {
-                <div class="col-lg-4 col-md-4 col-sm-4">
-                    <div class="single-banner banner-space ">
-                        <a>@Html.Raw(@Html.ActionLink("[replacetext]", "Index", "Category", new { id = @item.SanPhamID, name = @item.SEO }, null).ToHtmlString().Replace("[replacetext]", "<img style=\"display: block; max - width: 300px; max - height: 300px; width: 300px; height: 300px;\" src =\"/Photos/SP/" + item.SanPhamHinhs.FirstOrDefault().TenHinh + "\" />"))</a>
+                if (@item.SanPhamHinhs.Count() > 1)
+                {
+                    <div class="col-md-3">
+                        <div class="single-features">
+                            <div class="product-img">
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "Category", new { id = @item.SanPhamID, name = @item.SEO }, null).ToHtmlString().Replace("[replacetext]",
+                                       "<img style=\"display: block; max - width: 300px; max - height: 300px; width: 300px; height: 300px;\" class=\"first-img\"  src =\"/Photos/SP/" + @item.SanPhamHinhs.First().TenHinh + "\" />  <img style =\"display: block; max - width: 300px; max - height: 300px; width: 300px; height: 300px;\" class=\"second-img\"  src =\"/Photos/SP/" + @item.SanPhamHinhs.Skip(1).First().TenHinh + "\" />"))
+                                @Html.ActionLink("Xem Ngay", "Index", "Category", new { id = @item.SanPhamID, name = @item.SEO }, new { @class = "modal-view" })
+                            </div>
+                            <div class="product-content">
+                                <h5><a href="@Url.Action("Index", "Category", new { id = @item.SanPhamID, name = @item.SEO })" style="height:60px; max-height:60px">@item.TenSanPham</a></h5>
+                                @if (item.IDKhuyenMai == 2)
+                                {
+                                    <span class="pro-price">Giá: @string.Format("{0:#,##0 VND}", item.GiaBan - (item.GiaBan * Convert.ToDecimal(0.2)))</span>
+                                }
+                                else if (item.IDKhuyenMai == 3)
+                                {
+                                    <span class="pro-price">Giá: @string.Format("{0:#,##0 VND}", item.GiaBan - (item.GiaBan * Convert.ToDecimal(0.1)))</span>
+                                }
+                                else
+                                {
+                                    <span class="pro-price">Giá: @string.Format("{0:#,##0 VND}", item.GiaBan)</span>
+                                }
+                            </div>
+                        </div>
                     </div>
-                </div>
+                }
+                else
+                {
+                    <div class="col-md-3">
+                        <div class="single-features">
+                            <span class="sale-text">Sale</span>
+                            <div class="product-img">
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "Category", new { id = @item.SanPhamID, name = @item.SEO }, null).ToHtmlString().Replace("[replacetext]",
+        "<img style=\"display: block; max - width: 300px; max - height: 300px; width: 300px; height: 300px;\" class=\"first-img\"  src =\"/Photos/SP/" + @item.SanPhamHinhs.First().TenHinh + "\" /> "))
+                                @Html.ActionLink("Xem Ngay", "Index", "Category", new { id = @item.SanPhamID, name = @item.SEO }, new { @class = "modal-view" })
+                            </div>
+                            <div class="product-content">
+                                <h5><a href="@Url.Action("Index", "Category", new { id = @item.SanPhamID, name = @item.SEO })" style="height:60px; max-height:60px">@item.TenSanPham</a></h5>
+                                @if (item.IDKhuyenMai == 2)
+                                {
+                                    <span class="pro-price">Giá: @string.Format("{0:#,##0 VND}", item.GiaBan - (item.GiaBan * Convert.ToDecimal(0.2)))</span>
+                                }
+                                else if (item.IDKhuyenMai == 3)
+                                {
+                                    <span class="pro-price">Giá: @string.Format("{0:#,##0 VND}", item.GiaBan - (item.GiaBan * Convert.ToDecimal(0.1)))</span>
+                                }
+                                else
+                                {
+                                    <span class="pro-price">Giá: @string.Format("{0:#,##0 VND}", item.GiaBan)</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
             }
 
 

@@ -21,5 +21,17 @@ namespace ShopMyPham.Areas.Admin.Models
         [Required(ErrorMessage = "Vui lòng không bỏ trống !")]
         [StringLength(20, ErrorMessage = "Vui lòng nhập dưới 20 kí tự ")]
         public string Email { get; set; }
+
+        [Required(ErrorMessage = "Vui lòng không bỏ trống !")]
+        [StringLength(20, ErrorMessage = "Vui lòng nhập dưới 20 kí tự ")]
+        public string password { get; set; }
+
+        [Required(ErrorMessage = "Vui lòng không bỏ trống !")]
+        [StringLength(20, ErrorMessage = "Vui lòng nhập dưới 20 kí tự ")]
+        public string newpassword { get; set; }
+
+        [Required(ErrorMessage = "Vui lòng không bỏ trống !")]
+        [StringLength(20, ErrorMessage = "Vui lòng nhập dưới 20 kí tự ")]
+        public string passwordComfirm { get; set; }
     }
 }
