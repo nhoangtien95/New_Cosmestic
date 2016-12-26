@@ -60,14 +60,12 @@
                 <div class="col-lg-8 col-md-8 col-sm-12">
                     <div class="category-tab">
                         <div>
-
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs" role="tablist">
-                                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Sản Phâm Mơi</a></li>
+                                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Sản Phẩm Mới</a></li>
                                 <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Bán Chạy</a></li>
                                 @*<li role="presentation"><a href="#mostview" aria-controls="messages" role="tab" data-toggle="tab">Top Rated</a></li>*@
                             </ul>
-
                             <!-- Tab panes -->
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane active" id="home">
@@ -82,8 +80,16 @@
                                                             <div class="single-category-tab">
                                                                 <div class="single-features">
                                                                     <div class="product-img">
-                                                                        @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "Category", new { id = newArrival[hinh].SanPhamID, name = newArrival[hinh].SEO }, null).ToHtmlString().Replace("[replacetext]",
-"<img style=\"display: block; max - width: 166px; max - height: 166px; width: 166px; height: 166px;\" class=\"first-img\"  src =\"/Photos/SP/" + newArrival[hinh].SanPhamHinhs.First().TenHinh + "\" />  <img style =\"display: block; max - width: 166px; max - height: 166px; width: 166px; height: 166px;\" class=\"second-img\"  src =\"/Photos/SP/" + newArrival[hinh].SanPhamHinhs.Skip(1).First().TenHinh + "\" />"))
+                                                                        @if (newArrival[hinh].SanPhamHinhs.Count() > 1)
+                                                                        {
+                                                                            @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "Category", new { id = newArrival[hinh].SanPhamID, name = newArrival[hinh].SEO }, null).ToHtmlString().Replace("[replacetext]",
+         "<img style=\"display: block; max - width: 166px; max - height: 166px; width: 166px; height: 166px;\" class=\"first-img\"  src =\"/Photos/SP/" + newArrival[hinh].SanPhamHinhs.First().TenHinh + "\" />  <img style =\"display: block; max - width: 166px; max - height: 166px; width: 166px; height: 166px;\" class=\"second-img\"  src =\"/Photos/SP/" + newArrival[hinh].SanPhamHinhs.Skip(1).First().TenHinh + "\" />"))
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "Category", new { id = newArrival[hinh].SanPhamID, name = newArrival[hinh].SEO }, null).ToHtmlString().Replace("[replacetext]",
+         "<img style=\"display: block; max - width: 166px; max - height: 166px; width: 166px; height: 166px;\" class=\"first-img\"  src =\"/Photos/SP/" + newArrival[hinh].SanPhamHinhs.First().TenHinh + "\" /> "))
+                                                                        }
                                                                     </div>
                                                                     <div class="product-custom">
                                                                         <h5><a href="@Url.Action("Index", "Category", new { id = @newArrival[hinh].SanPhamID, name = @newArrival[hinh].SEO })">@newArrival[hinh].TenSanPham</a></h5>
@@ -127,11 +133,18 @@
                                                             <div class="single-category-tab">
                                                                 <div class="single-features">
                                                                     <div class="product-img">
-                                                                        @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "Category", new { id = mostView[hinh].SanPhamID, name = newArrival[hinh].SEO }, null).ToHtmlString().Replace("[replacetext]",
-"<img style=\"display: block; max - width: 166px; max - height: 166px; width: 166px; height: 166px;\" class=\"first-img\"  src =\"/Photos/SP/" + mostView[hinh].SanPhamHinhs.First().TenHinh + "\" />  <img style =\"display: block; max - width: 166px; max - height: 166px; width: 166px; height: 166px;\" class=\"second-img\"  src =\"/Photos/SP/" + mostView[hinh].SanPhamHinhs.Skip(1).First().TenHinh + "\" />"))
-
+                                                                        @if (mostView[hinh].SanPhamHinhs.Count() > 1)
+                                                                        {
+                                                                            @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "Category", new { id = mostView[hinh].SanPhamID, name = newArrival[hinh].SEO }, null).ToHtmlString().Replace("[replacetext]",
+         "<img style=\"display: block; max - width: 166px; max - height: 166px; width: 166px; height: 166px;\" class=\"first-img\"  src =\"/Photos/SP/" + mostView[hinh].SanPhamHinhs.First().TenHinh + "\" />  <img style =\"display: block; max - width: 166px; max - height: 166px; width: 166px; height: 166px;\" class=\"second-img\"  src =\"/Photos/SP/" + mostView[hinh].SanPhamHinhs.Skip(1).First().TenHinh + "\" />"))
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "Category", new { id = mostView[hinh].SanPhamID, name = newArrival[hinh].SEO }, null).ToHtmlString().Replace("[replacetext]",
+         "<img style=\"display: block; max - width: 166px; max - height: 166px; width: 166px; height: 166px;\" class=\"first-img\"  src =\"/Photos/SP/" + mostView[hinh].SanPhamHinhs.First().TenHinh + "\" />  "))
+                                                                        }
                                                                     </div>
-                                                                    <div class="product-content">
+                                                                    <div class="product-custom">
                                                                         <h5>@Html.ActionLink(@mostView[hinh].TenSanPham, "Index", "Category", new { id = @mostView[hinh].SanPhamID, name = @mostView[hinh].SEO }, null)</h5>
                                                                         @if (mostView[hinh].IDKhuyenMai == 2)
                                                                         {

@@ -12,6 +12,8 @@ namespace ShopMyPham.Areas.Admin.Controllers
     {
         private readonly ShopMyPhamEntities1 db = new ShopMyPhamEntities1();
         // GET: Admin/Home
+
+        
         public ActionResult Index()
         {
             if (Session["user"] == null)
@@ -20,6 +22,8 @@ namespace ShopMyPham.Areas.Admin.Controllers
             }
             return View();
         }
+
+        
         public ActionResult Profile()
         {
             if (Session["user"] == null)
@@ -32,6 +36,7 @@ namespace ShopMyPham.Areas.Admin.Controllers
             return View();
         }
 
+        
         public ActionResult changePassword()
         {
             if (Session["user"] == null)
@@ -69,6 +74,7 @@ namespace ShopMyPham.Areas.Admin.Controllers
 
             return RedirectToAction("Profile");
         }
+
         
         public ActionResult adminEdit()
         {

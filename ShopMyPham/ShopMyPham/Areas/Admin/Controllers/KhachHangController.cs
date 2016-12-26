@@ -13,6 +13,8 @@ namespace ShopMyPham.Areas.Admin.Controllers
     {
         private readonly ShopMyPhamEntities1 db = new ShopMyPhamEntities1();
         // GET: Admin/KhachHang
+
+        
         public ActionResult ListKhachHang()
         {
             //KhachHangDAO dao = new KhachHangDAO();

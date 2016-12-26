@@ -28,7 +28,7 @@
                                        "<img style=\"display: block; max - width: 300px; max - height: 300px; width: 300px; height: 300px;\" class=\"first-img\"  src =\"/Photos/SP/" + @item.SanPhamHinhs.First().TenHinh + "\" />  <img style =\"display: block; max - width: 300px; max - height: 300px; width: 300px; height: 300px;\" class=\"second-img\"  src =\"/Photos/SP/" + @item.SanPhamHinhs.Skip(1).First().TenHinh + "\" />"))
                                         @*<img style="display: block; max - width: 300px; max - height: 300px; width: 300px; height: 300px;" class="first-img" src="~/Photos/SP/@item.SanPhamHinhs.First().TenHinh" alt="" />
                                             <img style="display: block; max - width: 300px; max - height: 300px; width: 300px; height: 300px;" class="second-img" src="~/Photos/SP/@item.SanPhamHinhs.Skip(1).First().TenHinh" alt="" />*@
-                                        <a class="modal-view" href="#" data-toggle="modal" data-target="#productModal">Xem Ngay</a>
+                                        <a class="modal-view" href="@Url.Action("Index", "Category", new { id = @item.SanPhamID, name = @item.SEO })" data-toggle="modal" data-target="#productModal">Xem Ngay</a>
                                     </div>
                                     <div class="product-content">
                                         <h5><a href="#">@item.TenSanPham</a></h5>
@@ -45,7 +45,7 @@
                                     <div class="product-img">
                                         @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "Category", new { id = @item.SanPhamID, name = @item.SEO }, null).ToHtmlString().Replace("[replacetext]",
         "<img style=\"display: block; max - width: 300px; max - height: 300px; width: 300px; height: 300px;\" class=\"first-img\"  src =\"/Photos/SP/" + @item.SanPhamHinhs.First().TenHinh + "\" /> "))
-                                        <a class="modal-view" href="#" data-toggle="modal" data-target="#productModal">Xem Ngay</a>
+                                        <a class="modal-view" href="@Url.Action("Index", "Category", new { id = @item.SanPhamID, name = @item.SEO })" data-toggle="modal" data-target="#productModal">Xem Ngay</a>
                                     </div>
                                     <div class="product-content">
                                         <h5><a href="#">@item.TenSanPham</a></h5>

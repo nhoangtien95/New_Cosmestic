@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ShopMyPham.Models;
 using ShopMyPham.ViewModel;
-
+using ShopMyPham.Areas.Admin.DAO;
 
 namespace ShopMyPham.Controllers
 {
@@ -174,7 +174,7 @@ namespace ShopMyPham.Controllers
             DateTime currentDate = DateTime.UtcNow.AddDays(-7);
 
             //New Arrival Products
-            ViewBag.newArrival = db.SanPhams.Include("SanPhamHinhs").OrderByDescending(x => x.NgayThem).Where(x => x.NgayThem >= currentDate).Take(6).ToList();
+            ViewBag.newArrival = db.SanPhams.Include("SanPhamHinhs").OrderByDescending(x => x.NgayThem).Where(x => x.NgayThem >= currentDate).Take(8).ToList();
 
             //Featured Products
             ViewBag.featuredProducts = db.SanPhams.Include("SanPhamHinhs").OrderBy(x => Guid.NewGuid()).Take(8).ToList();
@@ -262,6 +262,26 @@ namespace ShopMyPham.Controllers
             {
                 return RedirectToAction("Index", "Client");
             }
+
+            var user = Session["user"] as QuanTri;
+
+            UserViewModel sanPham = null;
+            List<UserViewModel> list = new List<UserViewModel>();
+            var products = db.DonHangs.Where(x => x.UserId == user.ID).ToList();
+            foreach (var result in products)
+            {
+                sanPham = new UserViewModel();
+                sanPham.DonHangID = result.DonHangID;
+                sanPham.TenKhachHang = result.TenKhachHang;
+                sanPham.DiaChi = result.DiaChi;
+                sanPham.NgayDatHang = result.NgayDatHang;
+                sanPham.SoDienThoai = result.SoDienThoai;
+                sanPham.dsSanPham = db.DonHangChiTiets.Where(x => x.DonHangID == result.DonHangID).ToList();
+               
+                list.Add(sanPham);
+            }
+            ViewBag.list = list;
+
             return View();
         }
         #endregion

@@ -1,0 +1,36 @@
+﻿
+@{
+    Layout = null;
+}
+
+<meta http-equiv="Refresh" content="5; url=@Url.Action("Index", "Home")" />
+<script type="text/javascript">
+
+        function countdown()
+        {
+            seconds = document.getElementById("countdown").innerHTML;
+            if (seconds > 0)
+            {
+                document.getElementById("countdown").innerHTML = seconds - 1;
+                setTimeout("countdown()", 1000);
+            }
+        }
+
+        setTimeout("countdown()", 1000);
+
+</script>
+<h1 style="text-align:center">THANK YOU</h1>
+<body>
+    <div class="col-md-9" style="margin-top:280px">
+        <div id="generalTabContent" class="tab-content">
+            <div id="tab-edit" class="tab-pane fade in active">
+                <h3 style="text-align:center">Mua Hàng Thành Công</h3>
+                <div style="text-align:center">
+                    Cám ơn bạn đã lựa chọn chúng tôi. Xin kiểm tra đơn hàng ở thông tin cá nhân.<br />
+                    Sẽ có nhân viên liên lạc với bạn để xác nhận. <br />
+                    Vui lòng chờ trong <span id="countdown">5</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

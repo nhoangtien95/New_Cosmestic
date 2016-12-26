@@ -12,6 +12,8 @@ namespace ShopMyPham.Areas.Admin.Controllers
     {
         private readonly ShopMyPhamEntities1 db = new ShopMyPhamEntities1();
         // GET: Admin/BanHang
+
+            
         public ActionResult ListHoaDon()
         {
             if (Session["user"] == null)
@@ -39,6 +41,8 @@ namespace ShopMyPham.Areas.Admin.Controllers
             }
             return View();
         }
+
+        
         public ActionResult ListDonDat()
         {
             if (Session["user"] == null)

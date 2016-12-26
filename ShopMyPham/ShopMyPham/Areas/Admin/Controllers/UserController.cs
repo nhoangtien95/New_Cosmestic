@@ -12,6 +12,8 @@ namespace ShopMyPham.Areas.Admin.Controllers
     public class UserController : Controller
     {
         private readonly ShopMyPhamEntities1 db = new ShopMyPhamEntities1();
+
+       
         public ActionResult ListUser()
         {
             if (Session["user"] == null)

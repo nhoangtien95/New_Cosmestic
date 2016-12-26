@@ -66,6 +66,9 @@ namespace ShopMyPham.Areas.Admin.Controllers
 
             return categories;
         }
+
+
+       
         public ActionResult ListSanPham()
         {
             if(Session["user"] == null)
@@ -113,6 +116,14 @@ namespace ShopMyPham.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult addSanPham(ProductModel model, IEnumerable<HttpPostedFileBase> files)
         {
+            var checkSP = db.SanPhams.ToList();
+            foreach(var item in checkSP)
+            {
+                if ( model.MaSanPham == item.MaSanPham)
+                {
+                    ModelState.AddModelError("", "Mã sản phẩm đã tồn tại !");
+                }
+            }
             var sp = new SanPham()
             {
                 MaSanPham = model.MaSanPham,
@@ -246,6 +257,7 @@ namespace ShopMyPham.Areas.Admin.Controllers
             return RedirectToAction("ListSanPham");
         }
 
+        
         public ActionResult ListLoai()
         {
             if (Session["user"] == null)
@@ -320,6 +332,7 @@ namespace ShopMyPham.Areas.Admin.Controllers
             return RedirectToAction("ListLoai");
         }
 
+        
         public ActionResult ListNSX()
         {
             if (Session["user"] == null)

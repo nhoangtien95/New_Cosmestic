@@ -49,7 +49,7 @@
             <!-- logo start -->
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 <div class="logo">
-                    <a href="index.html"><img src="/Content/img/logo/logo.png" alt="" /></a>
+                    <a href="@Url.Action("Index", "Home")"><img src="/Content/img/logo/logo.png" alt="" /></a>
                 </div>
             </div>
             <!-- logo end -->
@@ -59,7 +59,7 @@
                     <div class="cart-total">
                         <ul>
                             <li>
-                                <a href="cart.html"><span class="cart-icon"><i class="fa fa-shopping-cart"></i></span></a>                               
+                                <a href=""><span class="cart-icon"><i class="fa fa-shopping-cart"></i></span></a>                               
                                 <div class="mini-cart-content">
                                     @if (cart == null || cart.Items.Count() == 0)
                                     {

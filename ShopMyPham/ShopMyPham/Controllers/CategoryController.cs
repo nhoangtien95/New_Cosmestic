@@ -57,6 +57,7 @@ namespace ShopMyPham.Controllers
             return View();
         }
 
+        [Route("menu-all")]
         public ActionResult MenuCategory(int id)
         {
             var viewModel = db.Loais.SingleOrDefault(x => x.ID == id);

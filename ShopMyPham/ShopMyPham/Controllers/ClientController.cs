@@ -11,9 +11,10 @@ namespace ShopMyPham.Controllers
     {
         private readonly ShopMyPhamEntities1 db = new ShopMyPhamEntities1();
         // GET: Client
-        [Route("user")]
+        [Route("dang-nhap")]
         public ActionResult Index()
         {
+            if (Session["user"] != null) return RedirectToAction("Index", "Home");
             return View();
         }
         [HttpPost]

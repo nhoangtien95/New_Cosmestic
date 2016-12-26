@@ -70,6 +70,14 @@ namespace ShopMyPham.Controllers
                 product.GiaBan = product.GiaBan - (product.GiaBan * Convert.ToDecimal(0.1));
             }
             
+            if (quantity > 10)
+            {
+                quantity = 10;
+            }
+            else if (quantity < 1)
+            {
+                quantity = 1;
+            }
                 var cartItem = new CartItem(id, product, product.SanPhamHinhs.FirstOrDefault(), quantity);
             cart.Add(cartItem);
             return RedirectToAction("Index");
@@ -90,6 +98,14 @@ namespace ShopMyPham.Controllers
         public RedirectToRouteResult UpdateCart(int id, int quantity = 1)
         {
             var cart = GetCart();
+            if (quantity > 10)
+            {
+                quantity = 10;
+            }
+            else if (quantity < 1)
+            {
+                quantity = 1;
+            }
 
             cart.Update(id, quantity);
             return RedirectToAction("Index");
@@ -144,6 +160,11 @@ namespace ShopMyPham.Controllers
             var cart = GetCart();
             var user = Session["user"] as QuanTri;
 
+            if (user.DiaChi == null)
+            {
+                return RedirectToAction("userInfo", "Home");
+            }
+
             DonHang dh = new DonHang()
             {
                 NgayDatHang = DateTime.UtcNow,
@@ -170,9 +191,14 @@ namespace ShopMyPham.Controllers
                 db.SaveChanges();
             }
             cart.Clear();
-            return RedirectToAction("Index");
+            return RedirectToAction("thankYou");
         }
         #endregion
+
+        public ActionResult thankYou()
+        {
+            return View();
+        }
 
     }
 }
