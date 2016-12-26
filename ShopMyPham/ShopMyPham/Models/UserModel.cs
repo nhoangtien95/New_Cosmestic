@@ -7,6 +7,7 @@ namespace ShopMyPham.Models
 {
     public class UserModel
     {
+        public int id { get; set; }
         public string password { get; set; }
         public string passwordNew { get; set; }
         public string passwordNewComfirm { get; set; }

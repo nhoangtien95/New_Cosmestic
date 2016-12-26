@@ -237,7 +237,7 @@ namespace ShopMyPham.Controllers
 
         #endregion
 
-        [Route("thuong-hieu")]
+        [Route("tat-ca-thuong-hieu")]
         public ActionResult allBrand()
         {
             ViewBag.ThuongHieu = db.ThuongHieux.OrderBy(x => x.TenTH).Where(x => x.TrangThai == 1).ToList();
@@ -263,6 +263,85 @@ namespace ShopMyPham.Controllers
                 return RedirectToAction("Index", "Client");
             }
             return View();
+        }
+        #endregion
+
+        #region EditUserInfo
+
+        /// <summary>
+        ///     Chinh sửa thông tin người dùng
+        /// </summary>
+        /// 
+        [HttpPost]
+        public ActionResult userEdit(UserModel model)
+        {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Client");
+            }
+            else
+            {
+                var user = db.QuanTris.Single(x => x.ID == model.id);
+                user.Ten = model.ten;
+                user.DiaChi = model.diachi;
+                user.Sdt = model.sdt;
+                user.Email = model.email;
+
+                db.ObjectStateManager.ChangeObjectState(user, System.Data.Entity.EntityState.Modified);
+                db.SaveChanges();
+
+                model.ten = user.Ten;
+                model.diachi = user.DiaChi;
+                model.sdt = user.Sdt;
+                model.email = user.Email;
+
+                return RedirectToAction("userInfo", "Home");
+            }
+            return RedirectToAction("userInfo", "Home");
+        }
+        #endregion
+
+        #region ChangePass
+
+        /// <summary>
+        ///     Chinh sửa thông tin người dùng
+        /// </summary>
+        /// 
+        [HttpPost]
+        public ActionResult passwordChange(UserModel model)
+        {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Client");
+            }
+            else
+            {
+                var user = db.QuanTris.Single(x => x.ID == model.id);
+
+                if (user.Password == model.password)
+                {
+                    if (model.passwordNew == model.passwordNewComfirm)
+                    {
+                        user.Password = model.passwordNewComfirm;
+
+                        db.ObjectStateManager.ChangeObjectState(user, System.Data.Entity.EntityState.Modified);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Mật khẩu không trùng khớp !!");
+                        return RedirectToAction("userInfo", "Home");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Mật khẩu hiện tại không đúng !!");
+                    return RedirectToAction("userInfo", "Home");
+                }
+
+                return RedirectToAction("userInfo", "Home");
+            }
+            return RedirectToAction("userInfo", "Home");
         }
         #endregion
     }

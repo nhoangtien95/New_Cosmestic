@@ -4,19 +4,57 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var user = Session["user"] as ShopMyPham.Models.QuanTri;
 }
+<head>
+    <link href="/Content/Login_theme/css/responsive.css" rel="stylesheet">
+    <link href="/Content/Login_theme/css/main.css" rel="stylesheet">
+</head>
 
 <br /><br />
 <div style="padding-left: 75px;">
-    @using (Html.BeginForm())
-    {
-        <h2><b>THÔNG TIN CÁ NHÂN</b></h2>
-        <hr />
-        
-        <b>Username: </b> @user.Username <br />
-        <b>Tên: </b> @Html.TextBoxFor(x => x.ten, new { @Value = user.Ten })<br />
-        <b>Địa chỉ: </b> @Html.TextBoxFor(x => x.diachi, new { @Value = user.DiaChi })<br />
-        <b>Số điện thoại: </b> @Html.TextBoxFor(x => x.sdt, new { @Value = user.Sdt })<br />
-        <b>Email: </b> @Html.TextBoxFor(x => x.email, new { @Value = user.Email })<br />
-    }
+
+    <div class="col-sm-4 col-sm-offset-1">
+        <div class="login-form">
+            <!--login form-->
+            <h2><b>THÔNG TIN CÁ NHÂN</b></h2>
+            <hr />
+            @using (Html.BeginForm("userEdit", "Home", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+                @Html.TextBoxFor(x => x.id, new { @Value = user.ID, @type = "hidden" })
+                <b>Username: </b> <input type="text" value="@user.Username" readonly /> <br />
+                <b>Tên: </b> @Html.TextBoxFor(x => x.ten, new { @Value = user.Ten, @required = "required" })<br />
+                <b>Địa chỉ: </b> @Html.TextBoxFor(x => x.diachi, new { @Value = user.DiaChi, @required = "required" })<br />
+                <b>Số điện thoại: </b> @Html.TextBoxFor(x => x.sdt, new { @Value = user.Sdt, @required = "required" })<br />
+                <b>Email: </b> @Html.TextBoxFor(x => x.email, new { @Value = user.Email, @required = "required" })<br />
+             
+                    <input type="submit" class="btn btn-default" value="Xác Nhận" style="background-color:lightgoldenrodyellow" />
+                    <input type="reset" class="btn btn-default" value="Nhập Lại" style="background-color:lightgoldenrodyellow" />
+
+            }
+            
+        </div><!--/login form-->
+    </div>
+
+
+    <div class="col-sm-4 col-sm-offset-1">
+        <div class="login-form">
+            <!--login form-->
+            <h2><b>Đổi Mật Khẩu</b></h2>
+            <hr />
+            @using (Html.BeginForm("passwordChange", "Home", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+                @Html.TextBoxFor(x => x.id, new { @Value = user.ID, @type = "hidden" })
+                <b>Mật khẩu hiện tại: </b> @Html.PasswordFor(x => x.password, new { @required = "required" })<br />
+                <b>Mật khẩu mới: </b> @Html.PasswordFor(x => x.passwordNew, new { @required = "required" })<br />
+                <b>Xác nhận mật khẩu mới: </b> @Html.PasswordFor(x => x.passwordNewComfirm, new { @required = "required" })<br />
+                <input type="submit" class="btn btn-default" value="Xác Nhận" style="background-color:lightgoldenrodyellow" />
+                <input type="reset" class="btn btn-default" value="Nhập Lại" style="background-color:lightgoldenrodyellow" />
+            }
+            
+        </div><!--/login form-->
+    </div>
 </div>
 

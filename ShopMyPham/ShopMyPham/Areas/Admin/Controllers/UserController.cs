@@ -14,6 +14,10 @@ namespace ShopMyPham.Areas.Admin.Controllers
         private readonly ShopMyPhamEntities1 db = new ShopMyPhamEntities1();
         public ActionResult ListUser()
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home", new { Area = "" });
+            }
             NhanVienDAO db = new NhanVienDAO();
             var list = db.getList();
 

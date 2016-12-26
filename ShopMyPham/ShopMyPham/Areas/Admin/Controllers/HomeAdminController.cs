@@ -14,10 +14,18 @@ namespace ShopMyPham.Areas.Admin.Controllers
         // GET: Admin/Home
         public ActionResult Index()
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home", new { Area = "" });
+            }
             return View();
         }
         public ActionResult Profile()
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home", new { Area = "" });
+            }
             var user = Session["user"] as ShopMyPham.Models.QuanTri;
             var ac = db.QuanTris.Where(x => x.ID == user.ID).FirstOrDefault();
             ViewBag.user = ac;
@@ -26,7 +34,10 @@ namespace ShopMyPham.Areas.Admin.Controllers
 
         public ActionResult changePassword()
         {
-            
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home", new { Area = "" });
+            }
             return View();
         }
 
@@ -61,6 +72,10 @@ namespace ShopMyPham.Areas.Admin.Controllers
         
         public ActionResult adminEdit()
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home", new { Area = "" });
+            }
             return View();
         }
 

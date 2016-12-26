@@ -18,10 +18,7 @@ namespace ShopMyPham.Areas.Admin.Controllers
         public List<ProductModel> getThuongHieu()
         {
             var th = db.ThuongHieux.Where(x => x.TrangThai == 1).ToList();
-            var categories = new List<ProductModel>
-            {
-                new ProductModel {IDThuongHieu = 0, ThuongHieu = "All"}
-            };
+            var categories = new List<ProductModel>();
 
             foreach (var item in th)
             {
@@ -38,10 +35,7 @@ namespace ShopMyPham.Areas.Admin.Controllers
         public List<ProductModel> getLoai()
         {
             var loai = db.Loais.ToList();
-            var categories = new List<ProductModel>
-            {
-                new ProductModel {IDLoai = 0, Loai = "All"}
-            };
+            var categories = new List<ProductModel>();
 
             foreach (var item in loai)
             {
@@ -58,10 +52,7 @@ namespace ShopMyPham.Areas.Admin.Controllers
         public List<ProductModel> getKhuyenMai()
         {
             var th = db.KhuyenMais.ToList();
-            var categories = new List<ProductModel>
-            {
-                new ProductModel {IDKhuyenMai = 0, KhuyenMai = "All"}
-            };
+            var categories = new List<ProductModel>();
 
             foreach (var item in th)
             {
@@ -77,6 +68,10 @@ namespace ShopMyPham.Areas.Admin.Controllers
         }
         public ActionResult ListSanPham()
         {
+            if(Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home", new { Area = "" });
+            }
             //SanPhamDAO dao = new SanPhamDAO();
             //var list = dao.GetAllList();  
             ViewBag.th = new SelectList(getThuongHieu(), "IDThuongHieu", "ThuongHieu");
@@ -137,6 +132,7 @@ namespace ShopMyPham.Areas.Admin.Controllers
 
             //
             var ktHinh = new[] { ".png", ".jpg", ".jpeg" };
+            int count = 1;
             foreach (var item in files)
             {
                 var fileName = Path.GetFileName(item.FileName);
@@ -147,7 +143,7 @@ namespace ShopMyPham.Areas.Admin.Controllers
                     string name = Path.GetFileNameWithoutExtension(fileName);
                     string productImage = name + ext;
                     var maSP = db.SanPhams.Single(x => x.MaSanPham == model.MaSanPham).SanPhamID;
-                    byte count = 1;
+                    
 
                     var img = new SanPhamHinh()
                     {
@@ -155,14 +151,15 @@ namespace ShopMyPham.Areas.Admin.Controllers
                         NgayThem = DateTime.UtcNow,
                         SoLanXem = 0,
                         SanPhamID = maSP,
-                        ThuTuHienThi = count
+                        ThuTuHienThi = Convert.ToByte(count)
                     };
                     db.SanPhamHinhs.AddObject(img);
-                    count++;
+                    
 
                     db.SaveChanges();
 
                     item.SaveAs(Server.MapPath("~/Photos/SP/" + productImage));
+                    count++;
                 }
             }
 
@@ -251,6 +248,10 @@ namespace ShopMyPham.Areas.Admin.Controllers
 
         public ActionResult ListLoai()
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home", new { Area = "" });
+            }
             ViewBag.list = db.Loais.Where(x => x.ChungLoaiID == null).ToList();
             ViewBag.selectLoai = new SelectList(getChungLoaiID(), "chungloaiID", "tenLoai");
 
@@ -321,6 +322,10 @@ namespace ShopMyPham.Areas.Admin.Controllers
 
         public ActionResult ListNSX()
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home", new { Area = "" });
+            }
             ViewBag.list = db.ThuongHieux.ToList();
             return View();
         }

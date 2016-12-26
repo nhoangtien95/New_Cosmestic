@@ -14,6 +14,10 @@ namespace ShopMyPham.Areas.Admin.Controllers
         // GET: Admin/BanHang
         public ActionResult ListHoaDon()
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home", new { Area = "" });
+            }
             DonHangDAO dao = new DonHangDAO();
             var list = dao.GetListHoaDon();
             return View(list);
@@ -29,10 +33,18 @@ namespace ShopMyPham.Areas.Admin.Controllers
         }
         public ActionResult ListKhuyenMai()
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home", new { Area = "" });
+            }
             return View();
         }
         public ActionResult ListDonDat()
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home", new { Area = "" });
+            }
             DonHangDAO dao = new DonHangDAO();
             var list = dao.GetListDonDat();
             return View(list);

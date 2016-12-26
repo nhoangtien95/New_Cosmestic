@@ -24,6 +24,10 @@ namespace ShopMyPham.Controllers
             {
                 ModelState.AddModelError("", "Tài khoản hoặc mật khẩu không đúng !");
             }
+            else if (user.TrangThai == false)
+            {
+                ModelState.AddModelError("", "Xin liên hệ quản trị viên !");
+            }
             else
             {
                 if (user.Password.Equals(model.Password))
@@ -54,19 +58,34 @@ namespace ShopMyPham.Controllers
         {
             if (ModelState.IsValid)
             {
-                QuanTri qt = new QuanTri()
+                var user = db.QuanTris.ToList();
+                int check = 0;
+                foreach(var u in user)
                 {
-                    Username = model.Username,
-                    Password = model.Password,
-                    TrangThai = false,
-                    Sdt = model.Phone
-                };
-                if (ModelState.IsValid)
-                {
-                    db.QuanTris.AddObject(qt);
-                    db.SaveChanges();
-                    return RedirectToAction("Finish");
+                    if (u.Username == model.Username) check = 1;                    
                 }
+
+                if (check == 1)
+                {
+                    ModelState.AddModelError("", "Tài khoản đã tồn tại !");
+                }
+                else
+                {
+                    QuanTri qt = new QuanTri()
+                    {
+                        Username = model.Username,
+                        Password = model.Password,
+                        TrangThai = true,
+                        Sdt = model.Phone
+                    };
+                    if (ModelState.IsValid)
+                    {
+                        db.QuanTris.AddObject(qt);
+                        db.SaveChanges();
+                        return RedirectToAction("Finish");
+                    }
+                }
+               
             }
 
             return View("Index");

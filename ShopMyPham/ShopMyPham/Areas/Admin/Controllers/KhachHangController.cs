@@ -17,6 +17,10 @@ namespace ShopMyPham.Areas.Admin.Controllers
         {
             //KhachHangDAO dao = new KhachHangDAO();
             //var list = dao.getList();
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home", new { Area = "" });
+            }
 
             ViewBag.user = db.QuanTris.Where(x => x.Level == 1).ToList();
             return View();
